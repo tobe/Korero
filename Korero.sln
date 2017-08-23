@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Korero\Korero", "Korero\Korero.csproj", "{DC07FEBA-A4E7-44AF-B1A3-797A936108E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC07FEBA-A4E7-44AF-B1A3-797A936108E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC07FEBA-A4E7-44AF-B1A3-797A936108E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC07FEBA-A4E7-44AF-B1A3-797A936108E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC07FEBA-A4E7-44AF-B1A3-797A936108E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70A4EEE5-6489-4336-9656-1BC406015808}
+	EndGlobalSection
+EndGlobal
