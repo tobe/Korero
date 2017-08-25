@@ -7,6 +7,7 @@ namespace Korero.Models
     public class Thread
     {
         public int ID { get; set; }
+        [Required]
         [StringLength(64)]
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
