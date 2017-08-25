@@ -18,10 +18,14 @@
         <a class="navbar-brand" href="#">Korero</a>
     </nav>
 
-    <div class="container">
+    <!-- Fluid container to span across the entire screen width -->
+    <div class="container-fluid">
         @RenderBody()
     </div>
 
     @RenderSection("Scripts", required: false)
+
+    <!-- Google's Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </body>
 </html>

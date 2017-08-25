@@ -4,4 +4,4 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Add etc here
 //import 'ng2-slim-loading-bar';
-//import 'ng2-slim-loading-bar/style.css';
+//import 'ng2-slim-loading-bar/style.css';  

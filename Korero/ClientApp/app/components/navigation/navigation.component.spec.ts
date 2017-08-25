@@ -3,23 +3,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationComponent } from './navigation.component';
 
 describe('NavigationComponent', () => {
-  let component: NavigationComponent;
-  let fixture: ComponentFixture<NavigationComponent>;
+    let component: NavigationComponent;
+    let fixture: ComponentFixture<NavigationComponent>;
 
-  beforeEach(async(() => {
+    beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavigationComponent ]
+        declarations: [ NavigationComponent ]
     })
     .compileComponents();
-  }));
+    }));
 
-  beforeEach(() => {
+    beforeEach(() => {
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+    });
 
-  it('should be created', () => {
+    it('should be created', () => {
     expect(component).toBeTruthy();
-  });
+    });
 });
