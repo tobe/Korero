@@ -1,84 +1,37 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Http.Authentication
-@model LoginViewModel
+﻿@model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-                if (loginProviders.Count == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in loginProviders)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+<div class="login">
+    <form class="form-signin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <h3 class="form-signin-heading">Sign into Korero</h3>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label name="Email" asp-for="Email">Email address</label>
+            <input name="Email" asp-for="Email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="john.smith@example.org">
+            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <span asp-validation-for="Email" class="form-text text-danger" role="alert"></span>
+        </div>
+        <div class="form-group">
+            <label name="Password" asp-for="Password">Password</label>
+            <input name="Password" asp-for="Password" type="password" class="form-control" placeholder="Enter your password here">
+            <span asp-validation-for="Password" class="form-text text-danger" role="alert"></span>
+        </div>
+        <div class="form-check">
+            <label asp-for="RememberMe" class="custom-control custom-checkbox">
+                <input asp-for="RememberMe" type="checkbox" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">@Html.DisplayNameFor(m => m.RememberMe)</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col"><button type="submit" class="btn btn-primary">Sign In</button></div>
+                <div class="ml-auto"><button type="button" onclick="location.href='@Url.Action("Register", "Account")'" class="btn btn-info">Register as a new user</button></div>
+            </div>
+        </div>
+    </form>
 </div>
-<app-root>Testing?</app-root>
