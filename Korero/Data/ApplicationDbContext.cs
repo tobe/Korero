@@ -16,6 +16,9 @@ namespace Korero.Data
         }
 
         public DbSet<Korero.Models.ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Korero.Models.Tag> Tag { get; set; }
+        public DbSet<Korero.Models.Reply> Reply { get; set; }
+        public DbSet<Korero.Models.Thread> Thread { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
