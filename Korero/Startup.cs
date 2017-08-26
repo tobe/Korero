@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Korero.Data;
 using Korero.Models;
-using Korero.Services;
+using Korero.Repositories;
 
 namespace Korero
 {
@@ -43,7 +43,7 @@ namespace Korero
             });
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IThreadRepository, ThreadRepository>();
 
             // Add MVC6
             services.AddMvc();
@@ -99,7 +99,7 @@ namespace Korero
             });
 
             // Seed
-            dbInitialize.Initialize();
+            dbInitialize.Initialize().Wait();
         }
     }
 }

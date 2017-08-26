@@ -1,7 +1,9 @@
-﻿namespace Korero.Data
+﻿using System.Threading.Tasks;
+
+namespace Korero.Data
 {
     public interface IDbInitialize
     {
-        void Initialize();
+        Task Initialize();
     }
 }
