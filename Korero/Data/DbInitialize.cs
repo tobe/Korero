@@ -85,8 +85,6 @@ namespace Korero.Data
                         DateCreated = DateTime.Now,
                         Tag = casualTag,
                         Replies = new List<Reply>() {
-                            genericReply,
-                            genericReply,
                             genericReply
                         }
                     }

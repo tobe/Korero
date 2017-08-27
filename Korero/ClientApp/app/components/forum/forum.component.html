@@ -1,2 +1,22 @@
 <h1>Forum</h1>
 <p>Some threads beneath</p>
+
+<!--
+threads?.total and not threads because async.
+This checks if the data is valid, and then displays it. This is known as an Elvis operator.    
+
+More elegant solution: async pipe.
+-->
+<p>
+    Total: {{ threads?.total }}
+</p>
+<li *ngFor="let thread of threads?.data">
+    <p>{{ thread.title }}</p>
+</li>
+
+<app-pagination (goPage)="goToPage($event)"
+               (goNext)="onNext()"
+               (goPrev)="onPrev()"
+               [page]="page"
+               [perPage]="limit"
+               [count]="total"></app-pagination>

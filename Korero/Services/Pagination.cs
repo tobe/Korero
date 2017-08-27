@@ -5,9 +5,12 @@ namespace Korero.Services
     public class PaginationInfo
     {
         public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 1;
     }
 
+    /// <summary>
+    /// https://stackoverflow.com/a/43737694
+    /// </summary>
     public static class Pagination
     {
         public static IQueryable<T> Paginate<T>(

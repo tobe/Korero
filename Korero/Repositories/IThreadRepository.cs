@@ -7,6 +7,6 @@ namespace Korero.Repositories
 {
     public interface IThreadRepository
     {
-        IEnumerable<Thread> GetThreads();
+        (IEnumerable<Thread>, int) GetThreads(int? page);
     }
 }

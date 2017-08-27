@@ -17,13 +17,15 @@ namespace Korero.Repositories
             this._context = context;
         }
 
-        public IEnumerable<Thread> GetThreads()
+        public (IEnumerable<Thread>, int) GetThreads(int? page)
         {
             IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag).Include(t => t.Replies);
 
-            return query.Paginate(
-                new PaginationInfo { PageNumber = 1, PageSize = 1 }
+            var paginatedData = query.Paginate(
+                new PaginationInfo { PageNumber = page ?? 1, PageSize = 1 }
             ).ToList();
+
+            return (paginatedData, query.Count());
         }
     }
 }
