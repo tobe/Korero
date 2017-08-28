@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class ThreadService {
-    private endpoint = 'api/thread'; 
+    private endpoint = 'api/thread';
 
     constructor(private http: Http) {
     }

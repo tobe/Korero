@@ -15,9 +15,13 @@ import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 // Own services
-import { ThreadService } from "./services/thread.service";
+import { ThreadService } from './services/thread.service';
+
+// Own filters
+import { ExcerptFilter } from './filters/excerpt.filter';
 
 @NgModule({
     declarations: [
@@ -25,7 +29,9 @@ import { ThreadService } from "./services/thread.service";
         HomeComponent,
         NavigationComponent,
         ForumComponent,
-        PaginationComponent
+        PaginationComponent,
+        AvatarComponent,
+        ExcerptFilter
     ],
     imports: [
         CommonModule,

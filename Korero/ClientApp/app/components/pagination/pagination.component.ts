@@ -36,13 +36,14 @@ export class PaginationComponent {
 
     onPrev(): void {
         console.log(this.page);
-        if(this.page !== 1)
+        if (this.page !== 1) {
             this.goPrev.emit(true);
+        }
     }
 
     onNext(next: boolean): void {
         this.page++;
-        if (this.lastPage()) return;
+        if (this.lastPage()) { return; }
         this.page--;
         this.goNext.emit(next);
     }

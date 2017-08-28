@@ -13,11 +13,11 @@ import { ThreadData } from '../../models/Thread';
 export class ForumComponent implements OnInit {
     /* https://stackoverflow.com/questions/35763730/difference-between-constructor-and-ngoninit */
 
-    public threads: ThreadData // API return
-    private loading = false;
-    private total = 0;
-    private page = 1;
-    private limit = 1;
+    public threads: ThreadData; // API return
+    public loading = false;
+    public total = 0;
+    public page = 1;
+    public limit = 1;
 
     // Same as private threadservice;  threadservice = ThreadService... Some neat DI
     constructor(private threadService: ThreadService) { }

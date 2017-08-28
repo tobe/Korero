@@ -19,7 +19,9 @@ namespace Korero.Repositories
 
         public (IEnumerable<Thread>, int) GetThreads(int? page)
         {
-            IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag).Include(t => t.Replies);
+            IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag)
+                .Include(t => t.Replies)
+                .Include(t => t.Author);
 
             var paginatedData = query.Paginate(
                 new PaginationInfo { PageNumber = page ?? 1, PageSize = 1 }

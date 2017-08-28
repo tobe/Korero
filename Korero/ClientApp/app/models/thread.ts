@@ -1,5 +1,6 @@
 import { Reply } from './reply'
 import { Tag } from './tag'
+import { User } from './user'
 
 export class Thread {
     public id: number;
@@ -7,6 +8,7 @@ export class Thread {
     public dateCreated: Date;
     public tag: Tag[];
     public replies: Reply[];
+    public author: User;
 }
 
 export class ThreadData {
