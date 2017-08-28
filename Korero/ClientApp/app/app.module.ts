@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+// Vendor components
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+
 // Own components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -38,6 +41,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         BrowserModule,
         HttpModule,
         FormsModule,
+        SlimLoadingBarModule.forRoot(), // Singleton
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'forum', component: ForumComponent },
