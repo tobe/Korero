@@ -14,6 +14,8 @@ namespace Korero.Data
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        private static Random random = new Random();
+
         public DbInitialize(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -22,6 +24,39 @@ namespace Korero.Data
             this._context     = context;
             this._userManager = userManager;
             this._roleManager = roleManager;
+        }
+
+        private static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private Thread RandomThread(ApplicationUser user, Tag tag)
+        {
+            DateTime Now = DateTime.Now;
+            Thread newThread = new Thread()
+            {
+                Title = RandomString(15),
+                DateCreated = DateTime.Now,
+                Tag = tag,
+                Replies = new List<Reply>(),
+                Author = user
+            };
+
+            for(int i = 0; i < random.Next(1, 10); i++)
+            {
+                newThread.Replies.Add(new Reply
+                {
+                    DateCreated = Now.AddDays(-1),
+                    DateUpdated = Now.AddDays(-1),
+                    Body = RandomString(256),
+                    Author = user
+                });
+            }
+
+            return newThread;
         }
 
         public async Task Initialize()
@@ -57,7 +92,7 @@ namespace Korero.Data
                     Label = "Casual",
                     Color = "#AAAAAA"
                 };
-                Reply genericReply = new Reply()
+                /*Reply genericReply = new Reply()
                 {
                     DateCreated = Now,
                     DateUpdated = Now,
@@ -95,12 +130,19 @@ namespace Korero.Data
                         },
                         Author = adminUser
                     }
-                };
+                };*/
 
                 // Init a tag, a thread and a reply.
                 await this._context.Tag.AddAsync(casualTag);
-                foreach (Thread t in threads)
+                /*foreach (Thread t in threads)
                 {
+                    await this._context.Thread.AddAsync(t);
+                    await this._context.Reply.AddRangeAsync(t.Replies);
+                }*/
+
+                for(int i = 0; i < 10; i++)
+                {
+                    Thread t = this.RandomThread(adminUser, casualTag);
                     await this._context.Thread.AddAsync(t);
                     await this._context.Reply.AddRangeAsync(t.Replies);
                 }

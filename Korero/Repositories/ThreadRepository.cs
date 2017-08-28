@@ -24,7 +24,7 @@ namespace Korero.Repositories
                 .Include(t => t.Author);
 
             var paginatedData = query.Paginate(
-                new PaginationInfo { PageNumber = page ?? 1, PageSize = 1 }
+                new PaginationInfo { PageNumber = page ?? 1, PageSize = 4 }
             ).ToList();
 
             return (paginatedData, query.Count());

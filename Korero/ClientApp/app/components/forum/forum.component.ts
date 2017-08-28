@@ -17,7 +17,7 @@ export class ForumComponent implements OnInit {
     public loading = false;
     public total = 0;
     public page = 1;
-    public limit = 1;
+    public limit = 4; // This needs to be synced with Korero.Repositories.ThreadRepository.cs!
 
     // Same as private threadservice;  threadservice = ThreadService... Some neat DI
     constructor(private threadService: ThreadService) { }

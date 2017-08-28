@@ -1,3 +1,16 @@
-﻿.media {
+﻿.thread {
+    border: 1px solid transparent;
     margin-bottom: 2rem;
+}
+.thread > ul {
+    margin: 0;
+}
+.thread:hover {
+    border: 1px solid #EEE;
+}
+.thread-title {
+    font-weight: 700;
+}
+.media-body > p {
+    margin-bottom: 0;
 }

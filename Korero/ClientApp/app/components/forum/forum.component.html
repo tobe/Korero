@@ -5,19 +5,40 @@
 threads?.total and not threads because async.
 This checks if the data is valid, and then displays it. This is known as an Elvis operator.    -->
 
-<ul class="list-unstyled">
-    <li class="media" *ngFor="let thread of threads?.data">
-        <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" alt="User profile image"></app-avatar>
-        <div class="media-body">
-            <h5 class="mt-0 mb-1">{{ thread.title }}</h5>
-            {{ thread.replies[0].body | excerpt:140 }}
-        </div>
-    </li>
-</ul>
 
-<app-pagination (goPage)="goToPage($event)"
-               (goNext)="onNext()"
-               (goPrev)="onPrev()"
-               [page]="page"
-               [perPage]="limit"
-               [count]="total"></app-pagination>
+<div class="row align-items-center">
+    <div class="col-8"></div>
+    <div class="col">Replies</div>
+    <div class="col">Views</div>
+</div>
+
+
+    <div class="row align-items-center thread" *ngFor="let thread of threads?.data">
+        <ul class="list-unstyled col-8">
+            <li class="media">
+                <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-center mr-3" alt="User profile image"></app-avatar>
+                <div class="media-body">
+                    <h4 class="mt-0 mb-1 thread-title">{{ thread.title }}</h4>
+                    <p>{{ thread.replies[0].body | excerpt:50 }}</p>
+                    <div class="info">
+                        <small class="text-success">@{{ thread.author.userName }}</small>
+                        <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="col">
+            <span style="font-size: 2.2rem;">12</span>
+        </div>
+        <div class="col">
+            <span style="font-size: 2.2rem;">5</span>
+        </div>
+    </div>
+
+
+    <app-pagination (goPage)="goToPage($event)"
+                    (goNext)="onNext()"
+                    (goPrev)="onPrev()"
+                    [page]="page"
+                    [perPage]="limit"
+                    [count]="total"></app-pagination>
