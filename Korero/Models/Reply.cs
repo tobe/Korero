@@ -12,6 +12,8 @@ namespace Korero.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
+        public ApplicationUser Author { get; set; }
+
         [Required]
         public string Body { get; set; }
     }

@@ -34,7 +34,7 @@ namespace Korero.Data
                 // Create an admin usser
                 var adminUser = new ApplicationUser
                 {
-                    UserName = "localhost@localhost.tld",
+                    UserName = "administrator",
                     Email = "localhost@localhost.tld",
                     EmailConfirmed = true
                 };
@@ -43,12 +43,15 @@ namespace Korero.Data
                 // Create the admin
                 var result = await this._userManager.CreateAsync(adminUser, "Myp@ss1");
                 // Add them the "Administrator" role
-                await this._userManager.AddToRoleAsync(await this._userManager.FindByNameAsync("localhost@localhost.tld"), "Administrator");
+                await this._userManager.AddToRoleAsync(await this._userManager.FindByNameAsync("administrator"), "Administrator");
             }
 
             if(!this._context.Thread.Any())
             {
                 // Initialize a couple of threads here
+                DateTime Now = DateTime.Now;
+                ApplicationUser adminUser = await this._userManager.FindByNameAsync("administrator");
+
                 Tag casualTag = new Tag()
                 {
                     Label = "Casual",
@@ -56,37 +59,41 @@ namespace Korero.Data
                 };
                 Reply genericReply = new Reply()
                 {
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    Body = "This is a generic reply. How fun."
+                    DateCreated = Now,
+                    DateUpdated = Now,
+                    Body = "This is a generic reply. How fun.",
+                    Author = adminUser
                 };
                 Thread[] threads =
                 {
                     new Thread() {
                         Title = "Sample Thread",
-                        DateCreated = DateTime.Now,
+                        DateCreated = Now,
                         Tag = casualTag,
                         Replies = new List<Reply>() {
-                            new Reply() { DateCreated = DateTime.Now.AddDays(-1), DateUpdated = DateTime.Now.AddDays(-1), Body = "First sample reply" },
-                            new Reply() { DateCreated = DateTime.Now, DateUpdated = DateTime.Now, Body = "Second sample reply" },
-                        }
+                            new Reply() { DateCreated = Now.AddDays(-1), DateUpdated = Now.AddDays(-1), Body = "First sample reply", Author = adminUser},
+                            new Reply() { DateCreated = Now, DateUpdated = Now, Body = "Second sample reply", Author = adminUser},
+                        },
+                        Author = adminUser
                     },
                     new Thread() {
                         Title = "Lorem ipsum dolor sit amet",
-                        DateCreated = DateTime.Now.AddDays(-3),
+                        DateCreated = Now.AddDays(-3),
                         Tag = casualTag,
                         Replies = new List<Reply>() {
-                            new Reply() { DateCreated = DateTime.Now.AddDays(-1), DateUpdated = DateTime.Now, Body = "Suspendisse commodo nibh orci, in rutrum tortor faucibus vel. Aenean eu felis vitae leo malesuada aliquet. Mauris ullamcorper urna eu tortor eleifend cursus." },
-                            new Reply() { DateCreated = DateTime.Now.AddDays(-5), DateUpdated = DateTime.Now.AddDays(-4), Body = "Some *good* **markdown** right here." },
-                        }
+                            new Reply() { DateCreated = Now.AddDays(-1), DateUpdated = Now, Body = "Suspendisse commodo nibh orci, in rutrum tortor faucibus vel. Aenean eu felis vitae leo malesuada aliquet. Mauris ullamcorper urna eu tortor eleifend cursus.", Author = adminUser},
+                            new Reply() { DateCreated = Now.AddDays(-5), DateUpdated = Now.AddDays(-4), Body = "Some *good* **markdown** right here.", Author = adminUser},
+                        },
+                        Author = adminUser
                     },
                     new Thread() {
                         Title = "Third time's the charm!",
-                        DateCreated = DateTime.Now,
+                        DateCreated = Now,
                         Tag = casualTag,
                         Replies = new List<Reply>() {
                             genericReply
-                        }
+                        },
+                        Author = adminUser
                     }
                 };
 
