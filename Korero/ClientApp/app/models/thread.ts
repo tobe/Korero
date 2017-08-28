@@ -6,6 +6,7 @@ export class Thread {
     public id: number;
     public title: string;
     public dateCreated: Date;
+    public views: number;
     public tag: Tag[];
     public replies: Reply[];
     public author: User;

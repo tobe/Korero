@@ -11,6 +11,7 @@ namespace Korero.Models
         [StringLength(64)]
         public string Title { get; set; }
         public DateTime DateCreated { get; set; }
+        public int Views { get; set; }
 
         public ApplicationUser Author { get; set; }
         public Tag Tag { get; set; }

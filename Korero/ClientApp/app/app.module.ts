@@ -34,7 +34,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         ForumComponent,
         PaginationComponent,
         AvatarComponent,
-        ExcerptFilter
+        ExcerptFilter // Exported in other modules
     ],
     imports: [
         CommonModule,

@@ -40,6 +40,7 @@ namespace Korero.Data
             {
                 Title = RandomString(15),
                 DateCreated = DateTime.Now,
+                Views = random.Next(0, 50),
                 Tag = tag,
                 Replies = new List<Reply>(),
                 Author = user
@@ -92,54 +93,8 @@ namespace Korero.Data
                     Label = "Casual",
                     Color = "#AAAAAA"
                 };
-                /*Reply genericReply = new Reply()
-                {
-                    DateCreated = Now,
-                    DateUpdated = Now,
-                    Body = "This is a generic reply. How fun.",
-                    Author = adminUser
-                };
-                Thread[] threads =
-                {
-                    new Thread() {
-                        Title = "Sample Thread",
-                        DateCreated = Now,
-                        Tag = casualTag,
-                        Replies = new List<Reply>() {
-                            new Reply() { DateCreated = Now.AddDays(-1), DateUpdated = Now.AddDays(-1), Body = "First sample reply", Author = adminUser},
-                            new Reply() { DateCreated = Now, DateUpdated = Now, Body = "Second sample reply", Author = adminUser},
-                        },
-                        Author = adminUser
-                    },
-                    new Thread() {
-                        Title = "Lorem ipsum dolor sit amet",
-                        DateCreated = Now.AddDays(-3),
-                        Tag = casualTag,
-                        Replies = new List<Reply>() {
-                            new Reply() { DateCreated = Now.AddDays(-1), DateUpdated = Now, Body = "Suspendisse commodo nibh orci, in rutrum tortor faucibus vel. Aenean eu felis vitae leo malesuada aliquet. Mauris ullamcorper urna eu tortor eleifend cursus.", Author = adminUser},
-                            new Reply() { DateCreated = Now.AddDays(-5), DateUpdated = Now.AddDays(-4), Body = "Some *good* **markdown** right here.", Author = adminUser},
-                        },
-                        Author = adminUser
-                    },
-                    new Thread() {
-                        Title = "Third time's the charm!",
-                        DateCreated = Now,
-                        Tag = casualTag,
-                        Replies = new List<Reply>() {
-                            genericReply
-                        },
-                        Author = adminUser
-                    }
-                };*/
-
                 // Init a tag, a thread and a reply.
                 await this._context.Tag.AddAsync(casualTag);
-                /*foreach (Thread t in threads)
-                {
-                    await this._context.Thread.AddAsync(t);
-                    await this._context.Reply.AddRangeAsync(t.Replies);
-                }*/
-
                 for(int i = 0; i < 10; i++)
                 {
                     Thread t = this.RandomThread(adminUser, casualTag);
