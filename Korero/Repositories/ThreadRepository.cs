@@ -17,6 +17,23 @@ namespace Korero.Repositories
             this._context = context;
         }
 
+        /// <summary>
+        /// Returns a single thread
+        /// </summary>
+        /// <returns></returns>
+        public Thread GetThread(int id)
+        {
+            return this._context.Thread.Where(t => t.ID == id)
+                .Include(t => t.Tag)
+                .Include(t => t.Author)
+                .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Returns all threads
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public (IEnumerable<Thread>, int) GetThreads(int? page)
         {
             IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag)

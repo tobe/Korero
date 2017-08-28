@@ -36,5 +36,19 @@ namespace Korero.Controllers.API
 
             return Ok(new { total = allThreads.Item2, data = allThreads.Item1 });
         }
+
+        /// <summary>
+        /// Returns a single thread
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id:int}")]
+        public IActionResult GetThread(int id)
+        {
+            var thread = this._threadRepository.GetThread(id);
+
+            return Ok(thread);
+        }
     }
 }

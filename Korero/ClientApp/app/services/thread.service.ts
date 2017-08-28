@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { ThreadData } from '../models/Thread';
+import { ThreadData, Thread } from '../models/thread';
 
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';
@@ -17,6 +17,13 @@ export class ThreadService {
         return this.http.get(`${this.endpoint}/p/${page}`)
             .toPromise()
             .then(response => response.json() as ThreadData)
+            .catch(this.handleError);
+    }
+
+    getThread(id: number): Promise<Thread> {
+        return this.http.get(`${this.endpoint}/${id}`)
+            .toPromise()
+            .then(response => response.json() as Thread)
             .catch(this.handleError);
     }
 

@@ -19,6 +19,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ForumComponent } from './components/forum/forum.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
+import { ThreadComponent } from './components/thread/thread.component';
 
 // Own services
 import { ThreadService } from './services/thread.service';
@@ -34,7 +35,8 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         ForumComponent,
         PaginationComponent,
         AvatarComponent,
-        ExcerptFilter // Exported in other modules
+        ThreadComponent,
+        ExcerptFilter
     ],
     imports: [
         CommonModule,
@@ -45,6 +47,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'forum', component: ForumComponent },
+            { path: 'thread/:id', component: ThreadComponent },
             { path: 'home', component: HomeComponent },
             { path: '**', redirectTo: 'home' } // --> ^
         ])
