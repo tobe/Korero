@@ -46,7 +46,19 @@ namespace Korero
             services.AddScoped<IThreadRepository, ThreadRepository>();
 
             // Add MVC6
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling =
+                                               Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            }); // Removes an infinite loop when returning JSON data... 2 good hours wasted.
+            /* Note to self: @ manual reverse navigation -> Reply.cs
+             * Tldr: Thread references Reply which references Thread which references Reply...
+             * (One Thread has multiple replies, and in the Reply model a manual foreign reference
+             * to thread has been explicitly made because of another workaround)
+             * All this works well with pointers in the actual *memory* of the program, but
+             * when returning data as JSON, the return will build up...  infinitely.
+             * */
 
             // Add Database Initializer / Seeder
             services.AddScoped<IDbInitialize, DbInitialize>();

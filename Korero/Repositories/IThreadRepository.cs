@@ -9,5 +9,6 @@ namespace Korero.Repositories
     {
         (IEnumerable<Thread>, int) GetThreads(int? page);
         Thread GetThread(int id);
+        IEnumerable<Reply> GetReplies(int threadId, int page);
     }
 }

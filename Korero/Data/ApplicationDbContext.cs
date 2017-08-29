@@ -26,6 +26,12 @@ namespace Korero.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            // (This is needed because of the workaround descibed in Reply)
+            // Manual referencing makes this good practice. Probably not needed, but good practice.
+            builder.Entity<Reply>()
+                .HasOne(r => r.Thread)
+                .WithMany(t => t.Replies);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Korero.Data
                 Author = user
             };
 
-            for(int i = 0; i < random.Next(1, 10); i++)
+            for(int i = 0; i < random.Next(4, 10); i++)
             {
                 newThread.Replies.Add(new Reply
                 {

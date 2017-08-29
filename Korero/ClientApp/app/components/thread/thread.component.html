@@ -1,1 +1,5 @@
 {{ thread?.title }}
+
+<li *ngFor="let reply of replies">
+    {{ reply.body }}
+</li>

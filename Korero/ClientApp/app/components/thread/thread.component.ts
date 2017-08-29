@@ -37,15 +37,15 @@ export class ThreadComponent implements OnInit {
         });
 
         this.getThread(this.id);
-        //this.getReplies(this.id);
+        this.getReplies();
     }
 
     getReplies(): void {
-        /*this.loading = true;
-        this.threadService.getReplies(this.id).then(replies => {
-            this.thread = thread;
+        this.loading = true;
+        this.threadService.getReplies(this.id, this.page).then(replies => {
+            this.replies = replies;
             this.loading = false;
-        });*/
+        });
     }
 
     getThread(id: number): void {
@@ -54,16 +54,16 @@ export class ThreadComponent implements OnInit {
 
     goToPage(n: number): void {
         this.page = n;
-        //this.getThreads();
+        this.getReplies();
     }
 
     onNext(): void {
         this.page++;
-        //this.getThreads();
+        this.getReplies();
     }
 
     onPrev(): void {
         this.page--;
-        //this.getThreads();
+        this.getReplies();
     }
 }
