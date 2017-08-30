@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-Korero-EA7A9117-6AD8-4EAB-A015-96713A540A38</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\app\services\auth.service.ts" />
+  </ItemGroup>
   <!--<ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>-->
@@ -20,6 +24,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
   </ItemGroup>
 
 </Project>

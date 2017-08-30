@@ -1,4 +1,7 @@
-﻿.thread {
+﻿.media-body {
+    cursor: pointer;
+}
+.thread {
     border: 1px solid transparent;
     margin-bottom: 2rem;
 }
@@ -13,4 +16,7 @@
 }
 .media-body > p {
     margin-bottom: 0;
+}
+.thread-info {
+    font-size: 2.2rem;
 }

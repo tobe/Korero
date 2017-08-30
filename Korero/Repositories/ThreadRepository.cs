@@ -70,7 +70,7 @@ namespace Korero.Repositories
                     .OrderByDescending(f => f.DateCreated)
                 );*/
             IQueryable<Reply> query = this._context.Reply.Where(r => r.Thread.ID == threadId)
-                .OrderByDescending(f => f.DateCreated)
+                .OrderBy(f => f.DateCreated)
                 .Include(r => r.Author);
 
             var paginatedData = query.Paginate(

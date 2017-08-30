@@ -45,6 +45,7 @@ export class ThreadComponent implements OnInit {
         this.threadService.getReplies(this.id, this.page).then(replies => {
             this.replies = replies;
             this.loading = false;
+            console.log(this.replies);
         });
     }
 

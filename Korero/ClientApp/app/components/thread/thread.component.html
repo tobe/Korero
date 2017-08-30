@@ -1,5 +1,25 @@
-{{ thread?.title }}
+<h2>{{ thread?.title }}</h2>
 
-<li *ngFor="let reply of replies">
-    {{ reply.body }}
-</li>
+<button type="button" class="btn btn-danger"
+    (click)="DeleteThread(thread.id)">
+    *ngIf="thread?.author == "
+        Delete
+</button>
+
+<div class="row align-items-center thread" *ngFor="let reply of replies">
+    <ul class="list-unstyled col-8">
+        <li class="media">
+            <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
+            <div class="media-body">
+                <p>{{ reply.body }}</p>
+                <div class="info">
+                    <small class="text-success">@{{ reply.author.userName }}</small>
+                    <small class="text-danger" *ngIf="thread?.author.userName == reply.author.userName"><strong>[OP]</strong></small>
+                    &ndash;
+                    <small class="text-secondary">{{ reply.dateCreated | date:'dd.MM.yyyy @ H:mm' }}.</small>
+                    <small class="text-secondary" *ngIf="reply.dateCreated != reply.dateUpdated">Edited at: {{ reply.dateUpdated | date:'dd.MM.yyyy @ H:mm' }}*</small>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

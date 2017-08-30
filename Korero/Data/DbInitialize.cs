@@ -28,32 +28,38 @@ namespace Korero.Data
 
         private static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            const string chars = "QWERTYUIOP ";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private Thread RandomThread(ApplicationUser user, Tag tag)
+        private static bool RandomBoolean()
+        {
+            return random.Next(100) < 50;
+        }
+
+        private Thread RandomThread(ApplicationUser user, ApplicationUser alternateUser, Tag tag)
         {
             DateTime Now = DateTime.Now;
+
             Thread newThread = new Thread()
             {
                 Title = RandomString(15),
-                DateCreated = DateTime.Now,
+                DateCreated = Now,
                 Views = random.Next(0, 50),
                 Tag = tag,
                 Replies = new List<Reply>(),
-                Author = user
+                Author = RandomBoolean() ? user : alternateUser
             };
 
             for(int i = 0; i < random.Next(4, 10); i++)
             {
                 newThread.Replies.Add(new Reply
                 {
-                    DateCreated = Now.AddDays(-1),
-                    DateUpdated = Now.AddDays(-1),
+                    DateCreated = Now.AddDays(random.Next(-10, -3)).AddHours(random.Next(-24, -1)),
+                    DateUpdated = Now.AddHours(random.Next(-23, -2)),
                     Body = RandomString(256),
-                    Author = user
+                    Author = RandomBoolean() ? user : alternateUser
                 });
             }
 
@@ -80,13 +86,23 @@ namespace Korero.Data
                 var result = await this._userManager.CreateAsync(adminUser, "Myp@ss1");
                 // Add them the "Administrator" role
                 await this._userManager.AddToRoleAsync(await this._userManager.FindByNameAsync("administrator"), "Administrator");
+
+                // Create a "normal" user.
+                var normalUser = new ApplicationUser
+                {
+                    UserName = "normaluser",
+                    Email = "totallycool@localhost.tld",
+                    EmailConfirmed = true
+                };
+                await this._userManager.CreateAsync(normalUser, "Myp@ss2");
             }
 
             if(!this._context.Thread.Any())
             {
                 // Initialize a couple of threads here
                 DateTime Now = DateTime.Now;
-                ApplicationUser adminUser = await this._userManager.FindByNameAsync("administrator");
+                ApplicationUser adminUser  = await this._userManager.FindByNameAsync("administrator");
+                ApplicationUser normalUser = await this._userManager.FindByNameAsync("normaluser");
 
                 Tag casualTag = new Tag()
                 {
@@ -97,7 +113,11 @@ namespace Korero.Data
                 await this._context.Tag.AddAsync(casualTag);
                 for(int i = 0; i < 10; i++)
                 {
-                    Thread t = this.RandomThread(adminUser, casualTag);
+                    Thread t = this.RandomThread(
+                        adminUser,
+                        normalUser,
+                        casualTag
+                    );
                     await this._context.Thread.AddAsync(t);
                     await this._context.Reply.AddRangeAsync(t.Replies);
                 }
