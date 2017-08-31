@@ -1,10 +1,13 @@
-<h2>{{ thread?.title }}</h2>
+<h2>{{ thread?.title }}<span class="badge badge-default">New</span></h2>
 
-<button type="button" class="btn btn-danger"
-    (click)="DeleteThread(thread.id)">
-    *ngIf="thread?.author == "
+<div class="thread-actions">
+    <!-- Show a delete button, if applicable -->
+    <button type="button" class="btn btn-danger"
+            (click)="DeleteThread(thread.id)"
+            *ngIf="thread?.author.userName == user?.userName">
         Delete
-</button>
+    </button>
+</div>
 
 <div class="row align-items-center thread" *ngFor="let reply of replies">
     <ul class="list-unstyled col-8">
@@ -14,7 +17,11 @@
                 <p>{{ reply.body }}</p>
                 <div class="info">
                     <small class="text-success">@{{ reply.author.userName }}</small>
-                    <small class="text-danger" *ngIf="thread?.author.userName == reply.author.userName"><strong>[OP]</strong></small>
+                    <small class="text-danger" *ngIf="thread?.author.userName == reply.author.userName">
+                        <strong>
+                            <abbr title="Original poster" class="initialism">[OP]</abbr>
+                        </strong>
+                    </small>
                     &ndash;
                     <small class="text-secondary">{{ reply.dateCreated | date:'dd.MM.yyyy @ H:mm' }}.</small>
                     <small class="text-secondary" *ngIf="reply.dateCreated != reply.dateUpdated">Edited at: {{ reply.dateUpdated | date:'dd.MM.yyyy @ H:mm' }}*</small>
@@ -23,3 +30,10 @@
         </li>
     </ul>
 </div>
+
+<app-pagination (goPage)="goToPage($event)"
+                (goNext)="onNext()"
+                (goPrev)="onPrev()"
+                [page]="page"
+                [perPage]="limit"
+                [count]="total"></app-pagination>

@@ -7,15 +7,14 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-export class ThreadService {
+export class AuthService {
     private endpoint = 'api/user';
 
-    constructor(private http: Http) {
-    }
+    constructor(private http: Http) {}
 
     // Returns the currently logged in user.
-    getUser(page: number): Promise<User> {
-        return this.http.get(`${this.endpoint}/p/${page}`)
+    getUser(): Promise<User> {
+        return this.http.get(this.endpoint)
             .toPromise()
             .then(response => response.json() as User)
             .catch(this.handleError);

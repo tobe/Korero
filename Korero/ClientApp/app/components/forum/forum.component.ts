@@ -14,7 +14,6 @@ export class ForumComponent implements OnInit {
     /* https://stackoverflow.com/questions/35763730/difference-between-constructor-and-ngoninit */
 
     public threads: ThreadData; // API return
-    public loading = false;
     public total = 0;
     public page = 1;
     public limit = 4; // This needs to be synced with Korero.Repositories.ThreadRepository.cs!
@@ -27,11 +26,9 @@ export class ForumComponent implements OnInit {
     }
 
     getThreads(): void {
-        this.loading = true;
         this.threadService.getThreads(this.page).then(threads => {
             this.threads = threads;
             this.total   = threads.total;
-            this.loading = false;
         });
     }
 

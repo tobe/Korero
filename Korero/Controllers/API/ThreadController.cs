@@ -68,10 +68,10 @@ namespace Korero.Controllers.API
 
             var replies = this._threadRepository.GetReplies(id, p);
 
-            if (replies == null || !replies.Any())
+            if (replies.Item1 == null || !replies.Item1.Any())
                 return NotFound();
 
-            return Ok(replies);
+            return Ok(new { total = replies.Item2, data = replies.Item1 });
         }
     }
 }

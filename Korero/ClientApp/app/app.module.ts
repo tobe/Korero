@@ -23,6 +23,7 @@ import { ThreadComponent } from './components/thread/thread.component';
 
 // Own services
 import { ThreadService } from './services/thread.service';
+import { AuthService } from './services/auth.service';
 
 // Own filters
 import { ExcerptFilter } from './filters/excerpt.filter';

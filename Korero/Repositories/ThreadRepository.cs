@@ -54,7 +54,7 @@ namespace Korero.Repositories
         /// <param name="threadId">The ID of the thread itself</param>
         /// <param name="page">The page the user is at (pagination purposes)</param>
         /// <returns></returns>
-        public IEnumerable<Reply> GetReplies(int threadId, int page)
+        public (IEnumerable<Reply>, int) GetReplies(int threadId, int page)
         {
             /* Something like...
              * SELECT * FROM `Reply`, `AspNetUsers`, `Thread`
@@ -77,7 +77,7 @@ namespace Korero.Repositories
                 new PaginationInfo { PageNumber = page, PageSize = 5 }
             ).ToList();
 
-            return paginatedData;
+            return (paginatedData, query.Count());
         }
     }
 }

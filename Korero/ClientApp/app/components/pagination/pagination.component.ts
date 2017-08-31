@@ -1,5 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
 @Component({
     selector: 'app-pagination',
     templateUrl: './pagination.component.html',
@@ -10,13 +12,12 @@ export class PaginationComponent {
     @Input() page: number;
     @Input() count: number;
     @Input() perPage: number;
-    @Input() loading: boolean;
 
     @Output() goPrev = new EventEmitter<boolean>();
     @Output() goNext = new EventEmitter<boolean>();
     @Output() goPage = new EventEmitter<number>();
 
-    constructor() { }
+    constructor(private slimLoadingBarService: SlimLoadingBarService) { }
 
     getMin(): number {
         return ((this.perPage * this.page) - this.perPage) + 1;
@@ -31,21 +32,30 @@ export class PaginationComponent {
     }
 
     onPage(n: number): void {
+        this.slimLoadingBarService.start();
         this.goPage.emit(n);
+        this.slimLoadingBarService.complete();
     }
 
     onPrev(): void {
-        console.log(this.page);
+        this.slimLoadingBarService.start();
         if (this.page !== 1) {
             this.goPrev.emit(true);
         }
+        this.slimLoadingBarService.complete();
     }
 
     onNext(next: boolean): void {
-        this.page++;
-        if (this.lastPage()) { return; }
-        this.page--;
+        // Some animations
+        this.slimLoadingBarService.start();
+
+        if (this.lastPage()) {
+            this.slimLoadingBarService.complete();
+            return;
+        }
         this.goNext.emit(next);
+
+        this.slimLoadingBarService.complete();
     }
 
     totalPages(): number {

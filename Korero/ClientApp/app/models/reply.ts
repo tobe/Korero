@@ -8,3 +8,7 @@ export class Reply {
 
     public author: User;
 }
+export class ReplyData {
+    public total: number;
+    public data: Reply[];
+}

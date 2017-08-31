@@ -22,7 +22,14 @@ namespace Korero.Controllers.API
         [HttpGet] // GET: /api/user
         public IActionResult GetUserInformation()
         {
-            return Ok(this._userManager.GetUserAsync(HttpContext.User).Result);
+            try
+            {
+                ApplicationUser user = this._userManager.GetUserAsync(HttpContext.User).Result;
+                return Ok(user);
+            }catch(AggregateException)
+            {
+                return Unauthorized();
+            }
         }
     }
 }
