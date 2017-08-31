@@ -14,6 +14,12 @@ export class ThreadService {
     constructor(private http: Http) {
     }
 
+    deleteThread(id: number): Promise<Response> {
+        return this.http.delete(`${this.endpoint}/${id}`)
+            .toPromise()
+            .catch(this.handleError);
+    }
+
     getThreads(page: number): Promise<ThreadData> {
         return this.http.get(`${this.endpoint}/p/${page}`)
             .toPromise()

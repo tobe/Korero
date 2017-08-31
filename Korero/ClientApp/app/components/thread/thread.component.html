@@ -3,7 +3,7 @@
 <div class="thread-actions">
     <!-- Show a delete button, if applicable -->
     <button type="button" class="btn btn-danger"
-            (click)="DeleteThread(thread.id)"
+            (click)="deleteThread()"
             *ngIf="thread?.author.userName == user?.userName">
         Delete
     </button>

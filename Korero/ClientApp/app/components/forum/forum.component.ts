@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 import { ThreadService } from '../../services/thread.service';
 
@@ -19,7 +20,10 @@ export class ForumComponent implements OnInit {
     public limit = 4; // This needs to be synced with Korero.Repositories.ThreadRepository.cs!
 
     // Same as private threadservice;  threadservice = ThreadService... Some neat DI
-    constructor(private threadService: ThreadService) { }
+    constructor(
+        private threadService: ThreadService,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
         this.getThreads();

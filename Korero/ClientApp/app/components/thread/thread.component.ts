@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { ThreadService } from '../../services/thread.service';
 import { AuthService } from '../../services/auth.service';
@@ -34,7 +34,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
     constructor(
         private threadService: ThreadService,
         private route: ActivatedRoute,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -52,10 +53,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    // Returns the current user
     getCurrentUser(): void {
         this.authService.getUser().then(user => this.user = user);
     }
 
+    // Returns all the thread's replies
     getReplies(): void {
         this.threadService.getReplies(this.id, this.page).then(replies => {
             this.replies = replies.data;
@@ -64,20 +67,26 @@ export class ThreadComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Returns information about a specified thread
     getThread(id: number): void {
-        this.threadService.getThread(this.id).then(thread => this.thread = thread);
+        this.threadService.getThread(this.id).then(thread => this.thread = thread)
+            .catch(() => this.router.navigate(['/404']));
     }
 
+    // Deletes a thread
+    deleteThread(): void {
+        this.threadService.deleteThread(this.id);
+    }
+
+    // Pagination stuff
     goToPage(n: number): void {
         this.page = n;
         this.getReplies();
     }
-
     onNext(): void {
         this.page++;
         this.getReplies();
     }
-
     onPrev(): void {
         this.page--;
         this.getReplies();

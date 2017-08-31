@@ -21,8 +21,8 @@ namespace Korero.Controllers.API
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("")] // /api/thread
-        [Route("p/{p:int?}")] // /api/thread/p/[int]
+        [Route("")] // GET /api/thread
+        [Route("p/{p:int?}")] // GET /api/thread/p/[int]
         public IActionResult GetThreads(int? p)
         {
             // A page must be non-negative
@@ -43,7 +43,7 @@ namespace Korero.Controllers.API
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{id:int}")] // api/thread/<id:int>
+        [Route("{id:int}")] // GET /api/thread/<id:int>
         public IActionResult GetThread(int id)
         {
             var thread = this._threadRepository.GetThread(id);
@@ -53,6 +53,16 @@ namespace Korero.Controllers.API
             return Ok(thread);
         }
 
+        [HttpDelete]
+        [Route("{id:int}")] // DELETE /api/thread/<id:int>
+        public IActionResult DeleteThread(int id)
+        {
+            if (this._threadRepository.DeleteThread(id))
+                return Ok();
+
+            return new NoContentResult();
+        }
+
         /// <summary>
         /// Returns all replies to a thread specified by the id
         /// </summary>
@@ -60,7 +70,7 @@ namespace Korero.Controllers.API
         /// <param name="p">The page to retrieve the results from (pagination)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("r/{id:int}/page/{p:int}")]
+        [Route("r/{id:int}/page/{p:int}")] // GET /api/thread/r/<id:int>/page/<p:int>
         public IActionResult GetReplies(int id, int p)
         {
             // A page must be non-negative

@@ -17,6 +17,17 @@ namespace Korero.Repositories
             this._context = context;
         }
 
+        public bool DeleteThread(int id)
+        {
+            Thread thread = this._context.Thread.FirstOrDefault(t => t.ID == id);
+            if (thread == null)
+                return false;
+
+            this._context.Thread.Remove(thread);
+            this._context.SaveChanges();
+            return true;
+        }
+
         /// <summary>
         /// Returns a single thread
         /// </summary>
