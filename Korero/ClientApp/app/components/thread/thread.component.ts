@@ -82,10 +82,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.deleteThread(this.id)
             .then(() => {
                 this.router.navigate(['/forum'])
-                this.notificationService.success("Thread deleted successfully");
+                this.notificationService.success("Thread deleted");
             })
             .catch(() => {
-                this.notificationService.error("Failed to delete the thread");
+                this.notificationService.error("Thread NOT deleted");
             });
     }
 
