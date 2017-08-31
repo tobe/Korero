@@ -23,6 +23,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { ErrorComponent } from './components/error/error.component';
+import { SimpleMDE } from './components/simplemde/simplemde.component';
 
 // Own services
 import { ThreadService } from './services/thread.service';
@@ -41,7 +42,8 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         AvatarComponent,
         ThreadComponent,
         ErrorComponent,
-        ExcerptFilter
+        ExcerptFilter,
+        SimpleMDE
     ],
     imports: [
         CommonModule,

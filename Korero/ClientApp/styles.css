@@ -2,12 +2,18 @@ body {
     padding-top: 5rem;
 }
 
+/* SimpleMDE */
+.CodeMirror {
+    height: 10rem;
+    margin-bottom: 2rem;
+}
+
 /* Bootstrap's buttons */
 button {
     cursor: pointer;
 }
 
-/* Sign in page */
+/* ASP.NET Sign in page */
 .login {
     padding-top: 5rem;
 }

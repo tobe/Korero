@@ -7,3 +7,6 @@ import 'ng2-slim-loading-bar';
 import 'ng2-slim-loading-bar/style.css';
 
 import 'angular2-notifications';
+
+import 'simplemde/dist/simplemde.min'
+import 'simplemde/dist/simplemde.min.css'

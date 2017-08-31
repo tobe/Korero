@@ -31,9 +31,16 @@
     </ul>
 </div>
 
-<app-pagination (goPage)="goToPage($event)"
-                (goNext)="onNext()"
-                (goPrev)="onPrev()"
-                [page]="page"
-                [perPage]="limit"
-                [count]="total"></app-pagination>
+<div class="row">
+    <div class="col-10">
+        <app-simplemde></app-simplemde>
+    </div>
+    <div class="col-md-2 ml-auto">
+        <app-pagination (goPage)="goToPage($event)"
+                        (goNext)="onNext()"
+                        (goPrev)="onPrev()"
+                        [page]="page"
+                        [perPage]="limit"
+                        [count]="total"></app-pagination>
+    </div>
+</div>
