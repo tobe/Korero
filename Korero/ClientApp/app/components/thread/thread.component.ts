@@ -8,6 +8,8 @@ import { Thread } from '../../models/thread';
 import { Reply } from '../../models/reply';
 import { User } from '../../models/user';
 
+import { NotificationsService } from 'angular2-notifications';
+
 @Component({
     selector: 'app-thread',
     templateUrl: './thread.component.html',
@@ -35,7 +37,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
         private threadService: ThreadService,
         private route: ActivatedRoute,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        private notificationService: NotificationsService
     ) { }
 
     ngOnInit(): void {
@@ -64,18 +67,26 @@ export class ThreadComponent implements OnInit, OnDestroy {
             this.replies = replies.data;
             this.total = replies.total;
             console.log(this.replies);
-        });
+        }).catch(() => this.router.navigate(['/error/404']));
     }
 
     // Returns information about a specified thread
     getThread(id: number): void {
-        this.threadService.getThread(this.id).then(thread => this.thread = thread)
-            .catch(() => this.router.navigate(['/404']));
+        this.threadService.getThread(this.id)
+            .then(thread => this.thread = thread)
+            .catch(()    => this.router.navigate(['/error/404']));
     }
 
     // Deletes a thread
     deleteThread(): void {
-        this.threadService.deleteThread(this.id);
+        this.threadService.deleteThread(this.id)
+            .then(() => {
+                this.router.navigate(['/forum'])
+                this.notificationService.success("Thread deleted successfully");
+            })
+            .catch(() => {
+                this.notificationService.error("Failed to delete the thread");
+            });
     }
 
     // Pagination stuff

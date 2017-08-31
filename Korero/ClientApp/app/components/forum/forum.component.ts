@@ -32,8 +32,8 @@ export class ForumComponent implements OnInit {
     getThreads(): void {
         this.threadService.getThreads(this.page).then(threads => {
             this.threads = threads;
-            this.total   = threads.total;
-        });
+            this.total = threads.total;
+        }).catch(() => this.router.navigate(['/error/404']));
     }
 
     goToPage(n: number): void {

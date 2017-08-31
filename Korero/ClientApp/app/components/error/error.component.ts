@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     selector: 'app-error',
-    templateUrl: './thread.component.html',
+    templateUrl: './error.component.html',
 })
 export class ErrorComponent implements OnInit, OnDestroy {
     public id: number;
@@ -24,7 +24,9 @@ export class ErrorComponent implements OnInit, OnDestroy {
             case 404:
                 this.message = "The resource you are looking for cannot be found.";
             break;
-            case 
+            default:
+                this.message = "An unknown error has occured.";
+            break;
         }
     }
 

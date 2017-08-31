@@ -5,6 +5,7 @@ using Korero.Data;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Korero.Services;
+using System.Security.Principal;
 
 namespace Korero.Repositories
 {
@@ -17,10 +18,14 @@ namespace Korero.Repositories
             this._context = context;
         }
 
-        public bool DeleteThread(int id)
+        public bool DeleteThread(int id, IIdentity currentUser)
         {
             Thread thread = this._context.Thread.FirstOrDefault(t => t.ID == id);
             if (thread == null)
+                return false;
+
+            // Check if the user trying to delete it is the author of the thread
+            if (thread.Author.UserName != currentUser.Name)
                 return false;
 
             this._context.Thread.Remove(thread);

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Korero.Repositories;
+using Korero.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Korero.Controllers.API
 {
@@ -11,7 +13,7 @@ namespace Korero.Controllers.API
     {
         private readonly IThreadRepository _threadRepository;
 
-        public ThreadController(IThreadRepository threadRepository)
+        public ThreadController(IThreadRepository threadRepository, UserManager<ApplicationUser> userManager)
         {
             this._threadRepository = threadRepository;
         }
@@ -57,7 +59,7 @@ namespace Korero.Controllers.API
         [Route("{id:int}")] // DELETE /api/thread/<id:int>
         public IActionResult DeleteThread(int id)
         {
-            if (this._threadRepository.DeleteThread(id))
+            if (this._threadRepository.DeleteThread(id, User.Identity)
                 return Ok();
 
             return new NoContentResult();

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import {
     LocationStrategy,
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
 
 // Vendor components
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 // Own components
 import { AppComponent } from './app.component';
@@ -47,6 +49,8 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         HttpModule,
         FormsModule,
         SlimLoadingBarModule.forRoot(), // Singleton
+        BrowserAnimationsModule,
+        SimpleNotificationsModule.forRoot(),
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'forum', component: ForumComponent },

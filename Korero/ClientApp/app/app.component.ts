@@ -19,6 +19,10 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 })
 export class AppComponent {
 
+    public simpleNotificationsOptions = {
+        timeOut: 5000
+    }
+
     constructor(private router: Router, private slimLoadingBarService: SlimLoadingBarService) {
         router.events.subscribe((event: RouterEvent) => {
             // Hook router's navigation
