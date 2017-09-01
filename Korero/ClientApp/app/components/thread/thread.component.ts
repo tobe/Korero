@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
 import { AuthService } from '../../services/auth.service';
@@ -94,10 +94,21 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
     // Adds a reply
     addReply(): void {
-        console.log(this.newReply);
+        if (!this.newReply.body || this.newReply.body.length === 0) return;
+
+        this.threadService.addReply(this.id, this.newReply)
+            .then(() => {
+                // Reply was successful, head to the latest page
+                this.notificationService.success("Reply added");
+                this.goToPage(this.lastPage());
+                this.newReply.body = ""; // Blank out the textarea
+            });
     }
 
     // Pagination stuff
+    lastPage(): number {
+        return Math.ceil(this.total / this.limit);
+    }
     goToPage(n: number): void {
         this.page = n;
         this.getReplies();

@@ -9,6 +9,7 @@
     </button>
 </div>
 
+
 <div class="row align-items-center thread" *ngFor="let reply of replies">
     <ul class="list-unstyled col-8">
         <li class="media">
@@ -33,9 +34,9 @@
 
 <div class="row">
     <div class="col-10 addreply">
-        <form (ngSubmit)="addReply()">
+        <form (ngSubmit)="addReply()" *ngIf="this.page == this.lastPage()">
             <app-simplemde [(model)]="newReply.body"></app-simplemde>
-            <input type="submit" class="btn btn-primary" value="Reply" />
+            <input type="submit" class="btn btn-primary" value="Reply" style="margin-top: 1rem" />
         </form>
     </div>
     <div class="col-md-2 ml-auto">

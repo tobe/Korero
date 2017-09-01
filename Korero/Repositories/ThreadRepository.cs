@@ -26,7 +26,8 @@ namespace Korero.Repositories
         /// <returns>true on success, false on failure</returns>
         public bool DeleteThread(int id, IIdentity currentUser)
         {
-            Thread thread = this._context.Thread.FirstOrDefault(t => t.ID == id);
+            Thread thread = this._context.Thread.Include(t => t.Author)
+                .SingleOrDefault(t => t.ID == id);
             if (thread == null)
                 return false;
 
@@ -58,14 +59,30 @@ namespace Korero.Repositories
         /// <returns></returns>
         public (IEnumerable<Thread>, int) GetThreads(int? page)
         {
+            /* Something like:
+             SELECT * FROM `Thread`, `Reply`, `AspNetUsers`, `Tag`
+             WHERE `Thread.ID`=`Reply.ThreadID` AND
+             WHERE `Tag.ID`=`Thread.TagID` AND
+             WHERE `Thread.AuthorID`=`AspNetUsers.Id`
+             ORDER BY `Reply.DateCreated` DESC,
+                      `Thread.DateCreated` DESC
+             */
             IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag)
-                .Include(t => t.Replies)
+                .Include(r => r.Replies)
                 .Include(t => t.Author)
                 .OrderByDescending(t => t.DateCreated);
+            // ^ Is sorted by the Thread's creation date. Now sort the replies.
 
             var paginatedData = query.Paginate(
                 new PaginationInfo { PageNumber = page ?? 1, PageSize = 4 }
             ).ToList();
+
+            // tfw u can't .Include(r => r.Replies.OrderBy())... FeelsBadMan
+            // https://stackoverflow.com/questions/8447384/how-to-order-child-collections-of-entities-in-ef?rq=1
+            foreach (var q in paginatedData)
+            {
+                q.Replies = q.Replies.OrderBy(x => x.DateCreated).ToList();
+            }
 
             return (paginatedData, query.Count());
         }
@@ -100,7 +117,7 @@ namespace Korero.Repositories
             /* Something like...
              * SELECT * FROM `Reply`, `AspNetUsers`, `Thread`
              * WHERE `Thread.ID` = threadId AND
-             * `Reply.ThreadID` = `Thread.ThreadID` AND
+             * `Reply.ThreadID` = `Thread.ID` AND
              * `Reply.AuthorID` = `AspNetUsers.Id`
              * ORDER BY `Thread.dateCreated` DESC
              * :)
