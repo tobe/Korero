@@ -30,4 +30,8 @@
     <TypeScriptCompile Include="ClientApp\app\services\auth.service.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ApiDtos\" />
+  </ItemGroup>
+
 </Project>

@@ -32,8 +32,11 @@
 </div>
 
 <div class="row">
-    <div class="col-10">
-        <app-simplemde></app-simplemde>
+    <div class="col-10 addreply">
+        <form (ngSubmit)="addReply()">
+            <app-simplemde [(model)]="newReply.body"></app-simplemde>
+            <input type="submit" class="btn btn-primary" value="Reply" />
+        </form>
     </div>
     <div class="col-md-2 ml-auto">
         <app-pagination (goPage)="goToPage($event)"

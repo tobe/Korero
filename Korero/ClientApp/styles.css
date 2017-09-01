@@ -5,7 +5,6 @@ body {
 /* SimpleMDE */
 .CodeMirror {
     height: 10rem;
-    margin-bottom: 2rem;
 }
 
 /* Bootstrap's buttons */

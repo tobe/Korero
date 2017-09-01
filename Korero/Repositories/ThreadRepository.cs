@@ -18,6 +18,12 @@ namespace Korero.Repositories
             this._context = context;
         }
 
+        /// <summary>
+        /// Removes a thread specified by its id
+        /// </summary>
+        /// <param name="id">Thread id</param>
+        /// <param name="currentUser">Currently logged in user</param>
+        /// <returns>true on success, false on failure</returns>
         public bool DeleteThread(int id, IIdentity currentUser)
         {
             Thread thread = this._context.Thread.FirstOrDefault(t => t.ID == id);
@@ -42,7 +48,7 @@ namespace Korero.Repositories
             return this._context.Thread.Where(t => t.ID == id)
                 .Include(t => t.Tag)
                 .Include(t => t.Author)
-                .FirstOrDefault();
+                .SingleOrDefault();
         }
 
         /// <summary>
@@ -62,6 +68,25 @@ namespace Korero.Repositories
             ).ToList();
 
             return (paginatedData, query.Count());
+        }
+
+        /// <summary>
+        /// Adds a reply [reply] to thread specified by threadId
+        /// </summary>
+        /// <param name="threadId">Thread id</param>
+        /// <param name="reply">The reply itself</param>
+        /// <returns>true on success, false on failure</returns>
+        public bool AddReply(int threadId, Reply reply)
+        {
+            try
+            {
+                this._context.Reply.Add(reply);
+                this._context.SaveChanges();
+                return true;
+            }catch
+            {
+                return false;
+            }
         }
 
         /// <summary>

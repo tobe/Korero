@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Korero.Repositories;
 using Korero.Models;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 
 namespace Korero.Controllers.API
 {
@@ -12,10 +14,12 @@ namespace Korero.Controllers.API
     public class ThreadController : Controller
     {
         private readonly IThreadRepository _threadRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ThreadController(IThreadRepository threadRepository, UserManager<ApplicationUser> userManager)
         {
             this._threadRepository = threadRepository;
+            this._userManager = userManager;
         }
 
         /// <summary>
@@ -50,16 +54,47 @@ namespace Korero.Controllers.API
         {
             var thread = this._threadRepository.GetThread(id);
 
-            // If thread fails, FirstOrDefault will take care of it.
+            if (thread == null)
+                return NotFound();
                         
             return Ok(thread);
+        }
+
+        [HttpPost]
+        [Route("{id:int}")] // POST /api/thread/<id:int>
+        // Task<IActionResult> because of the await userManager
+        public async Task<IActionResult> AddReply(int id, [FromBody] Reply data) {
+            if (data == null) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState); // Type validation, p much
+
+            // Grab some stuff we need
+            DateTime now = DateTime.Now;
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
+            Thread thread = this._threadRepository.GetThread(id);
+            if (thread == null) // Verify the thread we're trying to access exists
+                return BadRequest();
+
+            // Construct a reply
+            Reply reply = new Reply()
+            {
+                DateCreated = now,
+                DateUpdated = now,
+                Author = user,
+                Body = data.Body,
+                Thread = thread
+            };
+
+            if(this._threadRepository.AddReply(id, reply))
+                return Ok(reply);
+
+            return BadRequest();
         }
 
         [HttpDelete]
         [Route("{id:int}")] // DELETE /api/thread/<id:int>
         public IActionResult DeleteThread(int id)
         {
-            if (this._threadRepository.DeleteThread(id, User.Identity)
+            if (this._threadRepository.DeleteThread(id, User.Identity))
                 return Ok();
 
             return new NoContentResult();

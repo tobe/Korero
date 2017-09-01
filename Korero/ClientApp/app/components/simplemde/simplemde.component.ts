@@ -5,9 +5,10 @@ const _SimpleMDE: any = require('simplemde');
 
 @Component({
     selector: 'app-simplemde',
-    template: `<textarea #simplemde></textarea>`
+    template: `<textarea [(ngModel)]="model" #simplemde></textarea>`
 })
 export class SimpleMDE {
+    @Input() model: any;
     @Output() modelChange = new EventEmitter<string>();
     @ViewChild('simplemde') textarea: ElementRef;
 
@@ -25,5 +26,9 @@ export class SimpleMDE {
             const value = mde.codemirror.getValue();
             modelChange.emit(value);
         });
+
+        if (this.model) {
+            mde.codemirror.setValue(this.model);
+        }
     }
 }

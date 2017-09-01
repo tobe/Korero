@@ -22,6 +22,9 @@ export class ThreadComponent implements OnInit, OnDestroy {
     public replies: Reply[];
     public user: User;
 
+    // New thread reply
+    public newReply: Reply = new Reply();
+
     // Thread ID
     public id: number;
 
@@ -87,6 +90,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
             .catch(() => {
                 this.notificationService.error("Thread NOT deleted");
             });
+    }
+
+    // Adds a reply
+    addReply(): void {
+        console.log(this.newReply);
     }
 
     // Pagination stuff

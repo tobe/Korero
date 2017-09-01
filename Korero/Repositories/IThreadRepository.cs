@@ -12,5 +12,6 @@ namespace Korero.Repositories
         Thread GetThread(int id);
         (IEnumerable<Reply>, int) GetReplies(int threadId, int page);
         bool DeleteThread(int id, IIdentity currentUser);
+        bool AddReply(int threadId, Reply reply);
     }
 }
