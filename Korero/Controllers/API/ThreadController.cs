@@ -95,6 +95,31 @@ namespace Korero.Controllers.API
             return BadRequest();
         }
 
+        /// <summary>
+        /// Deletes a reply specified by the id
+        /// </summary>
+        /// <param name="id">The id of the reply</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("r/{id:int}")]
+        public IActionResult DeleteReply(int id)
+        {
+            // Grab the reply.
+            Reply reply = this._replyRepository.GetReply(id);
+            if (reply == null)
+                return BadRequest();
+
+            // Check whether the user is trying to delete their own reply
+            if (reply.Author.UserName != User.Identity.Name)
+                return BadRequest();
+
+            // So far so good, delete it
+            if (this._replyRepository.DeleteReply(reply))
+                return NoContent();
+
+            return BadRequest();
+        }
+
         [HttpPut]
         [Route("r/{id:int}")] // PUT /api/thread/r/<id:int>
         public IActionResult UpdateReply(int id, [FromBody] Reply data)

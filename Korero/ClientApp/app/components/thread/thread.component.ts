@@ -166,6 +166,23 @@ export class ThreadComponent implements OnInit, OnDestroy {
         setTimeout(() => this.goToPage(this.page), 1000);
     }
 
+    /**
+     * Deletes a reply specified by the id
+     * @param id reply id
+     */
+    deleteReply(id: number) {
+        // Just call the service
+        this.threadService.deleteReply(id)
+            .then(() => {
+                this.notificationService.success("Success", "The reply has been deleted");
+            }).catch(() => {
+                this.notificationService.error("Failure", "Failed to delete the reply");
+            });
+
+        // Update the replies. 
+        setTimeout(() => this.goToPage(this.page), 1000);
+    }
+
     // Pagination stuff
     lastPage(): number {
         return Math.ceil(this.total / this.limit);

@@ -9,5 +9,6 @@ namespace Korero.Repositories
         bool AddReply(int threadId, Reply reply);
         Reply GetReply(int replyId);
         bool UpdateReply(Reply reply);
+        bool DeleteReply(Reply reply);
     }
 }

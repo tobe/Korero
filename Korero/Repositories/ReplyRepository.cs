@@ -38,6 +38,19 @@ namespace Korero.Repositories
             }
         }
 
+        public bool DeleteReply(Reply reply)
+        {
+            try
+            {
+                this._context.Reply.Remove(reply);
+                this._context.SaveChanges();
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Returns a single reply by replyId
         /// </summary>

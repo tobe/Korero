@@ -51,7 +51,14 @@ export class ThreadService {
     updateReply(id: number, reply: Reply): Promise<Response> {
         return this.http.put(`${this.endpoint}/r/${id}`, reply)
             .toPromise()
-            .then(response => response.json() as Response)
+            .then(response => response as Response)
+            .catch(this.handleError);
+    }
+
+    deleteReply(id: number): Promise<Response> {
+        return this.http.delete(`${this.endpoint}/r/${id}`)
+            .toPromise()
+            .then(response => response as Response)
             .catch(this.handleError);
     }
 
