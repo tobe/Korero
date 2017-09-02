@@ -147,15 +147,19 @@ export class ThreadComponent implements OnInit, OnDestroy {
      * @param index The index of the reply in the this.replies array. Needed for inline edit.
      */
     updateReply(id: number, index: number) {
-        console.log(id, index);
-        console.log(this.replies[index]);
-
         // Remove the inline edit
         this.isEditableArray[index] = false;
 
-        // Reload the replies and show a success message
-        this.goToPage(this.page);
-        this.notificationService.success("Success", "The reply has been updated");
+        // Try to update
+        this.threadService.updateReply(id, this.replies[index])
+            .then(() => {
+                this.notificationService.success("Success", "The reply has been updated");
+            }).catch(() => {
+                this.notificationService.error("Failure", "Failed to update the reply");
+            });
+
+        // Update the replies. 
+        setTimeout(() => this.goToPage(this.page), 1000);
     }
 
     // Pagination stuff

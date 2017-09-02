@@ -48,6 +48,13 @@ export class ThreadService {
             .catch(this.handleError);
     }
 
+    updateReply(id: number, reply: Reply): Promise<Response> {
+        return this.http.put(`${this.endpoint}/r/${id}`, reply)
+            .toPromise()
+            .then(response => response.json() as Response)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('Error occured while fething data: ', error);
         return Promise.reject(error.message || error);

@@ -104,29 +104,22 @@ namespace Korero.Controllers.API
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             // Grab the current reply
-            Reply oldReply = this._replyRepository.GetReply(id);
-            if (oldReply == null) // If it doesn't exist, throw 'em a BadRequest
+            Reply reply = this._replyRepository.GetReply(id);
+            if (reply == null) // If it doesn't exist, throw 'em a BadRequest
                 return BadRequest();
 
             // Check if the user trying to edit the reply is the currently logged in user
             // Meaning, you can edit only your replies.
-            if (oldReply.Author.UserName != User.Identity.Name)
+            if (reply.Author.UserName != User.Identity.Name)
                 return BadRequest();
 
-            // Construct the new reply. Could have used AutoMapper here...
-            // Reply newReply = Mapper.Map<Reply>(data);
-            Reply newReply = new Reply()
-            {
-                DateCreated = oldReply.DateCreated,
-                DateUpdated = DateTime.Now,
-                Author = oldReply.Author,
-                Body = data.Body,
-                Thread = oldReply.Thread
-            };
+            // Edit the reply
+            reply.DateUpdated = DateTime.Now;
+            reply.Body = data.Body;
 
             // Update!
-            if (this._replyRepository.UpdateReply(newReply))
-                return Ok(newReply);
+            if (this._replyRepository.UpdateReply(reply))
+                return Ok(reply);
 
             return BadRequest();
         }
