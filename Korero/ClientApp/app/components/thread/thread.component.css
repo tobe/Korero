@@ -11,3 +11,7 @@
 .addreply {
     margin-bottom: 2rem;
 }
+input[type="submit"] {
+    margin-top: 1rem;
+    cursor: pointer;
+}

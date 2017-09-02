@@ -44,14 +44,14 @@ namespace Korero
 
             // Add application services.
             services.AddScoped<IThreadRepository, ThreadRepository>();
+            services.AddScoped<IReplyRepository,  ReplyRepository>();
 
             // Add MVC6
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ReferenceLoopHandling =
-                                               Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            }); // Removes an infinite loop when returning JSON data... 2 good hours wasted.
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                }); // Removes an infinite loop when returning JSON data... 2 good hours wasted.
             /* Note to self: @ manual reverse navigation -> Reply.cs
              * Tldr: Thread references Reply which references Thread which references Reply...
              * (One Thread has multiple replies, and in the Reply model a manual foreign reference
@@ -73,7 +73,7 @@ namespace Korero
                     ...
                });
               https://social.technet.microsoft.com/wiki/contents/articles/36959.asp-net-core-mvc-authentication-and-claim-based-authorisation-with-asp-net-identity-core.aspx
-             */
+            */
             services.AddAuthorization(options =>
             {
                 // Administrator only

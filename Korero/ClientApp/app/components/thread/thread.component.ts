@@ -47,6 +47,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         private router: Router,
         private notificationService: NotificationsService
     ) {
+        // Assume we have 64 replies. Set them as not editable at first.
         for (let i = 0; i < 64; i++) {
             this.isEditableArray[i] = false;
         }
@@ -67,6 +68,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    // Checks whet
     isEditable(index: number): boolean {
         if (typeof this.isEditableArray[index] === 'undefined' ||
             this.isEditableArray[index] == false)
@@ -79,6 +81,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
             this.isEditableArray[index] = value;
 
         // If the value is false -> user canceled the editing, swap the original reply
+        // (It has been called from the view)
         if (value == false) {
             console.log(this.replies[index], this.oldReplies[index]);
             this.replies[index] = this.oldReplies[index];
@@ -99,6 +102,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
             this.total      = replies.total;
         }).catch(() => this.router.navigate(['/error/404']));
 
+        // Loop through all the replies and actually set them to non-editable.
+        // Now, we know the exact number.
         for (let i = 0; i < this.total; i++) {
             this.isEditableArray[i] = false;
         }
@@ -116,10 +121,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.deleteThread(this.id)
             .then(() => {
                 this.router.navigate(['/forum']);
-                this.notificationService.success("Thread deleted");
+                this.notificationService.success("Success", "Thread has been deleted");
             })
             .catch(() => {
-                this.notificationService.error("Thread NOT deleted");
+                this.notificationService.error("Failure", "Thread hasn't been deleted");
             });
     }
 
@@ -130,10 +135,27 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.addReply(this.id, this.newReply)
             .then(() => {
                 // Reply was successful, head to the latest page
-                this.notificationService.success("Reply added");
+                this.notificationService.success("Success", "The reply has been added");
                 this.goToPage(this.lastPage());
                 this.newReply.body = ""; // Blank out the textarea
             });
+    }
+
+    /**
+     * Updates a reply given by the id
+     * @param id The ID of the Reply
+     * @param index The index of the reply in the this.replies array. Needed for inline edit.
+     */
+    updateReply(id: number, index: number) {
+        console.log(id, index);
+        console.log(this.replies[index]);
+
+        // Remove the inline edit
+        this.isEditableArray[index] = false;
+
+        // Reload the replies and show a success message
+        this.goToPage(this.page);
+        this.notificationService.success("Success", "The reply has been updated");
     }
 
     // Pagination stuff

@@ -14,12 +14,17 @@ namespace Korero.Controllers.API
     public class ThreadController : Controller
     {
         private readonly IThreadRepository _threadRepository;
+        private readonly IReplyRepository _replyRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ThreadController(IThreadRepository threadRepository, UserManager<ApplicationUser> userManager)
+        public ThreadController(
+            IThreadRepository threadRepository,
+            IReplyRepository replyRepository,
+            UserManager<ApplicationUser> userManager)
         {
             this._threadRepository = threadRepository;
             this._userManager = userManager;
+            this._replyRepository = replyRepository;
         }
 
         /// <summary>
@@ -84,8 +89,44 @@ namespace Korero.Controllers.API
                 Thread = thread
             };
 
-            if(this._threadRepository.AddReply(id, reply))
+            if(this._replyRepository.AddReply(id, reply))
                 return Ok(reply);
+
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("r/{id:int}")] // PUT /api/thread/r/<id:int>
+        public IActionResult UpdateReply(int id, [FromBody] Reply data)
+        {
+            // Validate the model
+            if (data == null) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Grab the current reply
+            Reply oldReply = this._replyRepository.GetReply(id);
+            if (oldReply == null) // If it doesn't exist, throw 'em a BadRequest
+                return BadRequest();
+
+            // Check if the user trying to edit the reply is the currently logged in user
+            // Meaning, you can edit only your replies.
+            if (oldReply.Author.UserName != User.Identity.Name)
+                return BadRequest();
+
+            // Construct the new reply. Could have used AutoMapper here...
+            // Reply newReply = Mapper.Map<Reply>(data);
+            Reply newReply = new Reply()
+            {
+                DateCreated = oldReply.DateCreated,
+                DateUpdated = DateTime.Now,
+                Author = oldReply.Author,
+                Body = data.Body,
+                Thread = oldReply.Thread
+            };
+
+            // Update!
+            if (this._replyRepository.UpdateReply(newReply))
+                return Ok(newReply);
 
             return BadRequest();
         }
@@ -113,7 +154,7 @@ namespace Korero.Controllers.API
             // A page must be non-negative
             if (p <= 0) p = 1;
 
-            var replies = this._threadRepository.GetReplies(id, p);
+            var replies = this._replyRepository.GetReplies(id, p);
 
             if (replies.Item1 == null || !replies.Item1.Any())
                 return NotFound();
