@@ -2,7 +2,7 @@
 
 <div class="thread-actions">
     <!-- Show a delete button, if applicable -->
-    <button class="btn btn-danger"
+    <button type="button" class="btn btn-danger"
             (click)="deleteThread()"
             *ngIf="thread?.author.userName == user?.userName">
         Delete
@@ -23,8 +23,8 @@
                     <app-simplemde [(model)]="reply.body"></app-simplemde>
                     <input type="submit" class="btn btn-success" value="Update" />
                     <button class="btn btn-warning" (click)="setEditable(i, false)">Cancel</button>
+                    <button type="button" *ngIf="isEditable(i)" class="btn btn-danger" (click)="deleteReply(reply.id)">Delete</button>
                 </form>
-                <button *ngIf="isEditable(i)" class="btn btn-danger" (click)="deleteReply(reply.id)">Delete</button>
 
                 <!-- Reply information -->
                 <div class="info">
