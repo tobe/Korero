@@ -77,8 +77,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
         return true;
     }
     setEditable(index: number, value: boolean): void {
-        if (typeof this.isEditableArray[index] !== 'undefined')
+        if (typeof this.isEditableArray[index] !== 'undefined') {
+            // We can't edit the replies we don't own
+            if (this.replies[index].author.userName != this.user.userName) return;
+
             this.isEditableArray[index] = value;
+        }
 
         // If the value is false -> user canceled the editing, swap the original reply
         // (It has been called from the view)
