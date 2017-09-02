@@ -22,8 +22,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
     public replies: Reply[];
     public user: User;
 
-    // New thread reply
+    // Inline edit. A bool array identifying which of the replies are in edit state.
+    public isEditableArray: boolean[] = [false];
+
+    // Some temporary variables to store various replies
     public newReply: Reply = new Reply();
+    public oldReplies: Reply[];
 
     // Thread ID
     public id: number;
@@ -42,7 +46,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private router: Router,
         private notificationService: NotificationsService
-    ) { }
+    ) {
+        for (let i = 0; i < 64; i++) {
+            this.isEditableArray[i] = false;
+        }
+    }
 
     ngOnInit(): void {
         this.sub = this.route.params.subscribe(params => {
@@ -59,6 +67,24 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    isEditable(index: number): boolean {
+        if (typeof this.isEditableArray[index] === 'undefined' ||
+            this.isEditableArray[index] == false)
+                return false;
+
+        return true;
+    }
+    setEditable(index: number, value: boolean): void {
+        if (typeof this.isEditableArray[index] !== 'undefined')
+            this.isEditableArray[index] = value;
+
+        // If the value is false -> user canceled the editing, swap the original reply
+        if (value == false) {
+            console.log(this.replies[index], this.oldReplies[index]);
+            this.replies[index] = this.oldReplies[index];
+        }
+    }
+
     // Returns the current user
     getCurrentUser(): void {
         this.authService.getUser().then(user => this.user = user);
@@ -67,10 +93,15 @@ export class ThreadComponent implements OnInit, OnDestroy {
     // Returns all the thread's replies
     getReplies(): void {
         this.threadService.getReplies(this.id, this.page).then(replies => {
-            this.replies = replies.data;
-            this.total = replies.total;
-            console.log(this.replies);
+            this.replies    = replies.data;
+            // Make a deep copy of the replies
+            this.oldReplies = ThreadComponent.deepCopy(replies.data);
+            this.total      = replies.total;
         }).catch(() => this.router.navigate(['/error/404']));
+
+        for (let i = 0; i < this.total; i++) {
+            this.isEditableArray[i] = false;
+        }
     }
 
     // Returns information about a specified thread
@@ -84,7 +115,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     deleteThread(): void {
         this.threadService.deleteThread(this.id)
             .then(() => {
-                this.router.navigate(['/forum'])
+                this.router.navigate(['/forum']);
                 this.notificationService.success("Thread deleted");
             })
             .catch(() => {
@@ -120,5 +151,22 @@ export class ThreadComponent implements OnInit, OnDestroy {
     onPrev(): void {
         this.page--;
         this.getReplies();
+    }
+
+    /**
+     * Returns a deep copy of the object.
+     * Not gonna rely on lodash or some shit to use this, since Ang2 doesn't
+     * support this out of the box like ang1 does.
+     * @url https://stackoverflow.com/a/38722431
+     */
+    public static deepCopy(oldObj: any) {
+        var newObj = oldObj;
+        if (oldObj && typeof oldObj === "object") {
+            newObj = Object.prototype.toString.call(oldObj) === "[object Array]" ? [] : {};
+            for (var i in oldObj) {
+                newObj[i] = this.deepCopy(oldObj[i]);
+            }
+        }
+        return newObj;
     }
 }

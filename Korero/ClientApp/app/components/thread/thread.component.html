@@ -10,12 +10,19 @@
 </div>
 
 
-<div class="row align-items-center thread" *ngFor="let reply of replies">
+<div class="row align-items-center thread" *ngFor="let reply of replies; let i = index" [attr.data-index]="i">
     <ul class="list-unstyled col-8">
         <li class="media">
             <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
             <div class="media-body">
-                <p>{{ reply.body }}</p>
+                <p *ngIf="!isEditable(i)" (click)="setEditable(i, true)">{{ reply.body }}</p>
+
+                <!-- Inline edit-->
+                <form *ngIf="isEditable(i)" (ngSubmit)="updateReply(reply.id)">
+                    <app-simplemde [(model)]="reply.body"></app-simplemde>
+                    <button class="btn btn-warning" (click)="setEditable(i, false)">Cancel</button>
+                </form>
+
                 <div class="info">
                     <small class="text-success">@{{ reply.author.userName }}</small>
                     <small class="text-danger" *ngIf="thread?.author.userName == reply.author.userName">

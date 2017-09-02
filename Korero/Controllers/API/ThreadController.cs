@@ -97,7 +97,7 @@ namespace Korero.Controllers.API
             if (this._threadRepository.DeleteThread(id, User.Identity))
                 return Ok();
 
-            return new NoContentResult();
+            return BadRequest();
         }
 
         /// <summary>
