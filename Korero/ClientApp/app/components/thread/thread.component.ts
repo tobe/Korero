@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
+import { ReplyService } from '../../services/reply.service';
 import { AuthService } from '../../services/auth.service';
 
 import { Thread } from '../../models/thread';
@@ -14,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
     selector: 'app-thread',
     templateUrl: './thread.component.html',
     styleUrls: ['./thread.component.css'],
-    providers: [ThreadService, AuthService]
+    providers: [ReplyService, AuthService]
 })
 export class ThreadComponent implements OnInit, OnDestroy {
     // Will hold the data returned from the API
@@ -41,6 +42,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     private sub: any;
 
     constructor(
+        private replyService: ReplyService,
         private threadService: ThreadService,
         private route: ActivatedRoute,
         private authService: AuthService,
@@ -99,7 +101,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
     // Returns all the thread's replies
     getReplies(): void {
-        this.threadService.getReplies(this.id, this.page).then(replies => {
+        this.replyService.getReplies(this.id, this.page).then(replies => {
             this.replies    = replies.data;
             // Make a deep copy of the replies
             this.oldReplies = ThreadComponent.deepCopy(replies.data);
@@ -136,7 +138,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     addReply(): void {
         if (!this.newReply.body || this.newReply.body.length === 0) return;
 
-        this.threadService.addReply(this.id, this.newReply)
+        this.replyService.addReply(this.id, this.newReply)
             .then(() => {
                 // Reply was successful, head to the latest page
                 this.notificationService.success("Success", "The reply has been added");
@@ -155,7 +157,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.isEditableArray[index] = false;
 
         // Try to update
-        this.threadService.updateReply(id, this.replies[index])
+        this.replyService.updateReply(id, this.replies[index])
             .then(() => {
                 this.notificationService.success("Success", "The reply has been updated");
             }).catch(() => {
@@ -172,7 +174,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
      */
     deleteReply(id: number) {
         // Just call the service
-        this.threadService.deleteReply(id)
+        this.replyService.deleteReply(id)
             .then(() => {
                 this.notificationService.success("Success", "The reply has been deleted");
             }).catch(() => {
