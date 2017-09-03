@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { ThreadData, Thread } from '../models/thread';
+import { Tag } from '../models/tag';
 
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Rx';

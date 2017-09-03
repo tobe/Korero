@@ -29,6 +29,7 @@ import { SimpleMDEComponent } from './components/simplemde/simplemde.component';
 import { ThreadService } from './services/thread.service';
 import { ReplyService } from './services/reply.service';
 import { AuthService } from './services/auth.service';
+import { TagService } from './services/tag.service';
 
 // Own filters
 import { ExcerptFilter } from './filters/excerpt.filter';
