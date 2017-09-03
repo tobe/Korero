@@ -7,7 +7,7 @@ const _SimpleMDE: any = require('simplemde');
     selector: 'app-simplemde',
     template: `<textarea [(ngModel)]="model" #simplemde></textarea>`
 })
-export class SimpleMDE {
+export class SimpleMDEComponent {
     @Input() model: any;
     @Output() modelChange = new EventEmitter<string>();
     @ViewChild('simplemde') textarea: ElementRef;

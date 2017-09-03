@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-error',
@@ -22,10 +22,10 @@ export class ErrorComponent implements OnInit, OnDestroy {
 
         switch (this.id) {
             case 404:
-                this.message = "The resource you are looking for cannot be found.";
+                this.message = 'The resource you are looking for cannot be found.';
             break;
             default:
-                this.message = "An unknown error has occured.";
+                this.message = 'An unknown error has occured.';
             break;
         }
     }

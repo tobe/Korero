@@ -73,15 +73,16 @@ export class ThreadComponent implements OnInit, OnDestroy {
     // Checks whet
     isEditable(index: number): boolean {
         if (typeof this.isEditableArray[index] === 'undefined' ||
-            this.isEditableArray[index] == false)
+            this.isEditableArray[index] === false) {
                 return false;
+        }
 
         return true;
     }
     setEditable(index: number, value: boolean): void {
         if (typeof this.isEditableArray[index] !== 'undefined') {
             // We can't edit the replies we don't own
-            if (this.replies[index].author.userName != this.user.userName) return;
+            if (this.replies[index].author.userName !== this.user.userName) { return; }
 
             this.isEditableArray[index] = value;
         }
@@ -127,23 +128,23 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.deleteThread(this.id)
             .then(() => {
                 this.router.navigate(['/forum']);
-                this.notificationService.success("Success", "Thread has been deleted");
+                this.notificationService.success('Success', 'Thread has been deleted');
             })
             .catch(() => {
-                this.notificationService.error("Failure", "Thread hasn't been deleted");
+                this.notificationService.error('Failure', 'Thread hasn\'t been deleted');
             });
     }
 
     // Adds a reply
     addReply(): void {
-        if (!this.newReply.body || this.newReply.body.length === 0) return;
+        if (!this.newReply.body || this.newReply.body.length === 0) { return; }
 
         this.replyService.addReply(this.id, this.newReply)
             .then(() => {
                 // Reply was successful, head to the latest page
-                this.notificationService.success("Success", "The reply has been added");
+                this.notificationService.success('Success', 'The reply has been added');
                 this.goToPage(this.lastPage());
-                this.newReply.body = ""; // Blank out the textarea
+                this.newReply.body = ''; // Blank out the textarea
             });
     }
 
@@ -159,12 +160,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
         // Try to update
         this.replyService.updateReply(id, this.replies[index])
             .then(() => {
-                this.notificationService.success("Success", "The reply has been updated");
+                this.notificationService.success('Success', 'The reply has been updated');
             }).catch(() => {
-                this.notificationService.error("Failure", "Failed to update the reply");
+                this.notificationService.error('Failure', 'Failed to update the reply');
             });
 
-        // Update the replies. 
+        // Update the replies.
         setTimeout(() => this.goToPage(this.page), 1000);
     }
 
@@ -176,12 +177,12 @@ export class ThreadComponent implements OnInit, OnDestroy {
         // Just call the service
         this.replyService.deleteReply(id)
             .then(() => {
-                this.notificationService.success("Success", "The reply has been deleted");
+                this.notificationService.success('Success', 'The reply has been deleted');
             }).catch(() => {
-                this.notificationService.error("Failure", "Failed to delete the reply");
+                this.notificationService.error('Failure', 'Failed to delete the reply');
             });
 
-        // Update the replies. 
+        // Update the replies.
         setTimeout(() => this.goToPage(this.page), 1000);
     }
 
@@ -209,10 +210,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
      * @url https://stackoverflow.com/a/38722431
      */
     public static deepCopy(oldObj: any) {
-        var newObj = oldObj;
-        if (oldObj && typeof oldObj === "object") {
-            newObj = Object.prototype.toString.call(oldObj) === "[object Array]" ? [] : {};
-            for (var i in oldObj) {
+        let newObj = oldObj;
+        if (oldObj && typeof oldObj === 'object') {
+            newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
+            for (const i in oldObj) {
                 newObj[i] = this.deepCopy(oldObj[i]);
             }
         }

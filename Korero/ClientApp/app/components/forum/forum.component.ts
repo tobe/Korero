@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
 
@@ -33,6 +33,7 @@ export class ForumComponent implements OnInit {
         this.threadService.getThreads(this.page).then(threads => {
             this.threads = threads;
             this.total = threads.total;
+            console.log(threads);
         }).catch(() => this.router.navigate(['/error/404']));
     }
 

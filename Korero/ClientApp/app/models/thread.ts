@@ -15,4 +15,5 @@ export class Thread {
 export class ThreadData {
     public total: number;
     public data: Thread[];
+    public hide: boolean = false; // Filtering purposes ;)
 }
