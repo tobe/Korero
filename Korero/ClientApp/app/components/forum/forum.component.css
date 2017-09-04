@@ -20,6 +20,19 @@
 .thread-info {
     font-size: 2.2rem;
 }
-badge {
+.badge {
     margin-right: .5rem;
+}
+.badge:hover {
+    opacity: 1 !important;
+}
+a.badge {
+    color: #FFF;
+}
+a.badge:hover {
+    color: #FFF;
+    cursor: pointer;
+}
+.taglist {
+    padding-left: 1rem;
 }

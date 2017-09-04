@@ -7,13 +7,14 @@ export class Thread {
     public title: string;
     public dateCreated: Date;
     public views: number;
-    public tag: Tag[];
+    public tag: Tag;
     public replies: Reply[];
     public author: User;
+
+    public show: boolean = true; // Filtering purposes ;)
 }
 
 export class ThreadData {
     public total: number;
     public data: Thread[];
-    public filter: boolean = false; // Filtering purposes ;)
 }

@@ -23,7 +23,8 @@ export class ForumComponent implements OnInit {
     public limit = 4; // This needs to be synced with Korero.Repositories.ThreadRepository.cs!
 
     // Filter
-    tags: Tag[];   
+    tags: Tag[];
+    showAll: boolean = true;
 
     // Same as private threadservice;  threadservice = ThreadService... Some neat DI
     constructor(
@@ -41,9 +42,9 @@ export class ForumComponent implements OnInit {
         this.threadService.getThreads(this.page).then(threads => {
             this.threads = threads;
             this.total = threads.total;
-        }).catch(() => this.router.navigate(['/error/404']));
 
-        this.filterTags();
+            this.filterTags();
+        }).catch(() => this.router.navigate(['/error/404']));
     }
 
     getTags(): void {
@@ -52,15 +53,30 @@ export class ForumComponent implements OnInit {
         }).catch(() => this.router.navigate(['/error/404']));
     }
 
-    clickTag(): void {
-        // set checked = false
-        // call filterTags
+    tagFilter(tag: Tag, index: number, array: any): boolean {
+        // Ignore intellisense here, "this" refers to "thread.tag", check filterTags below.
+        return (tag.checked === true && tag.id === this.id)
+    }
+
+    clickTag(tag: Tag): void {
+        tag.checked = !tag.checked;
+
+        // If there is at least 1 tag checked, then we never want to show all.
+        this.showAll = true;
+        for (const tag of this.tags) {
+            if (tag.checked === true) { this.showAll = false; break; }
+        }
+
+        this.filterTags();
     }
     filterTags(): void {
-        /*
-        Loop through this.threads
-        check if a thread's tag is checked, if so, set thread.filter = true
-        */
+        for (const thread of this.threads.data) {
+            if (!this.showAll) { // If we are not showing all threads, filter them
+                thread.show = this.tags.find(this.tagFilter, thread.tag) ? true : false;
+            } else { // Show all.
+                thread.show = true;
+            }
+        }
     }
 
     goToPage(n: number): void {

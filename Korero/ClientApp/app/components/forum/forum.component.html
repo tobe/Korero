@@ -1,10 +1,17 @@
-﻿<h1>Forum</h1>
-<p>Some threads beneath</p>
-
-<!--
+﻿<!--
 threads?.total and not threads because async.
 This checks if the data is valid, and then displays it. This is known as an Elvis operator.    -->
 
+<div class="row taglist">
+    <h5>
+        <a *ngFor="let tag of tags"
+           class="badge"
+           [ngStyle]="{'background-color': tag.color, 'opacity': tag.checked ? 1 : 0.3}"
+           (click)="clickTag(tag)">
+            {{ tag.label }}
+        </a>
+    </h5>
+</div>
 
 <div class="row align-items-center">
     <div class="col-8"></div>
@@ -13,33 +20,35 @@ This checks if the data is valid, and then displays it. This is known as an Elvi
 </div>
 
 
-<div class="row align-items-center thread" *ngFor="let thread of threads?.data">
-    <ul class="list-unstyled col-8">
-        <li class="media">
-            <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-center mr-3" alt="User profile image"></app-avatar>
-            <div class="media-body" routerLink="/thread/{{ thread.id }}">
-                <h4 class="mt-0 mb-1 thread-title">
-                    <span class="badge" [ngStyle]="{'background-color': thread.tag.color}">
-                        {{ thread.tag.label }}
-                    </span>
-                    {{ thread.title }}
-                </h4>
-                <p>{{ thread.replies[0].body | excerpt:50 }}</p>
-                <div class="info">
-                    <small class="text-success">@{{ thread.author.userName }}</small>
-                    &ndash;
-                    <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+<ng-container *ngFor="let thread of threads?.data">
+    <div class="row align-items-center thread" *ngIf="thread.show">
+        <ul class="list-unstyled col-8">
+            <li class="media">
+                <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-center mr-3" alt="User profile image"></app-avatar>
+                <div class="media-body" routerLink="/thread/{{ thread.id }}">
+                    <h4 class="mt-0 mb-1 thread-title">
+                        <span class="badge" [ngStyle]="{'background-color': thread.tag.color}">
+                            {{ thread.tag.label }}
+                        </span>
+                        {{ thread.title }}
+                    </h4>
+                    <p>{{ thread.replies[0].body | excerpt:50 }}</p>
+                    <div class="info">
+                        <small class="text-success">@{{ thread.author.userName }}</small>
+                        &ndash;
+                        <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-    <div class="col">
-        <span class="thread-info">{{ thread.replies.length }}</span>
+            </li>
+        </ul>
+        <div class="col">
+            <span class="thread-info">{{ thread.replies.length }}</span>
+        </div>
+        <div class="col">
+            <span class="thread-info">{{ thread.views }}</span>
+        </div>
     </div>
-    <div class="col">
-        <span class="thread-info">{{ thread.views }}</span>
-    </div>
-</div>
+</ng-container>
 
 <app-pagination (goPage)="goToPage($event)"
                 (goNext)="onNext()"
