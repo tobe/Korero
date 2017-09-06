@@ -3,14 +3,9 @@
         <input [(ngModel)]="thread.title" name="title" class="form-control form-control-lg" type="text" placeholder="Thread title">
     </div>
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+        <select class="custom-select">
+            <option *ngFor="let tag of tags" value="tag.id">{{ tag.label }}</option>
+        </select>
     </div>
     <div class="form-group">
         <app-simplemde [(model)]="reply.body"></app-simplemde>
