@@ -15,6 +15,7 @@ import { Tag } from '../../models/tag';
     providers: [ThreadService, TagService]
 })
 export class ForumComponent implements OnInit {
+    id: any;
     /* https://stackoverflow.com/questions/35763730/difference-between-constructor-and-ngoninit */
 
     public threads: ThreadData; // API return

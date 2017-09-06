@@ -24,6 +24,7 @@ import { AvatarComponent } from './components/avatar/avatar.component';
 import { ThreadComponent } from './components/thread/thread.component';
 import { ErrorComponent } from './components/error/error.component';
 import { SimpleMDEComponent } from './components/simplemde/simplemde.component';
+import { NewThreadComponent } from './components/newthread/newthread.component';
 
 // Own services
 import { ThreadService } from './services/thread.service';
@@ -45,7 +46,8 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         ThreadComponent,
         ErrorComponent,
         ExcerptFilter,
-        SimpleMDEComponent
+        SimpleMDEComponent,
+        NewThreadComponent
     ],
     imports: [
         CommonModule,
@@ -59,6 +61,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'forum', component: ForumComponent },
             { path: 'thread/:id', component: ThreadComponent },
+            { path: 'newthread', component: NewThreadComponent },
             { path: 'error/:id', component: ErrorComponent },
             { path: 'home', component: HomeComponent },
             { path: '**', redirectTo: 'home' } // --> ^

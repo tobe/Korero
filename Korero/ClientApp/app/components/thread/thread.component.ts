@@ -15,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
     selector: 'app-thread',
     templateUrl: './thread.component.html',
     styleUrls: ['./thread.component.css'],
-    providers: [ReplyService, AuthService]
+    providers: [ReplyService, AuthService, ThreadService]
 })
 export class ThreadComponent implements OnInit, OnDestroy {
     // Will hold the data returned from the API
