@@ -14,14 +14,14 @@ import { NotificationsService } from 'angular2-notifications';
     providers: [ThreadService, ReplyService]
 })
 export class NewThreadComponent {
-    public reply: Reply;
-    public thread: Thread;
+    public reply: Reply = new Reply();
+    public thread: Thread = new Thread();
 
     constructor(
         private replyService: ReplyService,
-        ///private threadService: ThreadService,
+        private threadService: ThreadService,
         private notificationService: NotificationsService
-    ) { }
+    ) {}
 
 
 

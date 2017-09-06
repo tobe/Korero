@@ -1,10 +1,18 @@
 <form>
     <div class="form-group">
-        <label for="title">Title</label>
-        <input [(ngModel)]="thread.title" class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+        <input [(ngModel)]="thread.title" name="title" class="form-control form-control-lg" type="text" placeholder="Thread title">
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
     </div>
     <div class="form-group">
-        <label for="body">Body</label>
         <app-simplemde [(model)]="reply.body"></app-simplemde>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

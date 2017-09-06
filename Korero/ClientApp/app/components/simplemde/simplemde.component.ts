@@ -5,7 +5,7 @@ const _SimpleMDE: any = require('simplemde');
 
 @Component({
     selector: 'app-simplemde',
-    template: `<textarea [(ngModel)]="model" #simplemde></textarea>`
+    template: `<textarea [(ngModel)]="model" placeholder="Content goes here..." #simplemde></textarea>`
 })
 export class SimpleMDEComponent {
     @Input() model: any;
