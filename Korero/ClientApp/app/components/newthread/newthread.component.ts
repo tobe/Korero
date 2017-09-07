@@ -21,6 +21,8 @@ export class NewThreadComponent implements OnInit {
     public thread: Thread = new Thread();
     public tags: Tag[];
 
+    public selectedTag: Tag;
+
     constructor(
         private replyService: ReplyService,
         private threadService: ThreadService,
@@ -34,7 +36,11 @@ export class NewThreadComponent implements OnInit {
     }
 
     getTags(): void {
-        this.tagService.getTags().then(tags => this.tags = tags);
+        this.tagService.getTags().then(tags => {
+            this.tags = tags;
+
+            this.selectedTag = tags[0];
+        });
     }
 
 }
