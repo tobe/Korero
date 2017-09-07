@@ -7,7 +7,8 @@
                placeholder="Thread title"
                #title="ngModel"
                required>
-        <small [hidden]="title.valid || title.pristine"
+        <!-- || title.pristine -->
+        <small [hidden]="title.valid"
                class="form-text text-danger" role="alert">
                 Thread title is required.
         </small>
@@ -27,5 +28,8 @@
             Thread body is required.
         </small>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit"
+           class="btn btn-primary"
+           value="Submit"
+           [disabled]="reply.body?.length <= 0 || !title.valid">
 </form>
