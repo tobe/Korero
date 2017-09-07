@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
 import { ReplyService } from '../../services/reply.service';
@@ -27,6 +28,7 @@ export class NewThreadComponent implements OnInit {
         private replyService: ReplyService,
         private threadService: ThreadService,
         private tagService: TagService,
+        private router: Router,
         private notificationService: NotificationsService
     ) {}
 
@@ -44,6 +46,17 @@ export class NewThreadComponent implements OnInit {
     }
 
     addThread(): void {
-
+        this.threadService.createThread(this.thread.title, this.selectedTag.id)
+            .then(thread => {
+                console.log("new thread id: " + thread.id);
+                this.replyService.addReply(thread.id, this.reply)
+                    .then(() => {
+                        this.notificationService.success('Success', 'Thread created');
+                        this.router.navigate(['/thread/' + thread.id]);
+                    })
+                    .catch(() => {
+                        this.router.navigate(['/error/400']);
+                    });
+            }).catch(() => this.router.navigate(['/error/400']));
     }
 }
