@@ -89,7 +89,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
         // If the value is false -> user canceled the editing, swap the original reply
         // (It has been called from the view)
-        if (value == false) {
+        if (value === false) {
             console.log(this.replies[index], this.oldReplies[index]);
             this.replies[index] = this.oldReplies[index];
         }

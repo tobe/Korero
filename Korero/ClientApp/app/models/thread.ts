@@ -1,6 +1,6 @@
-import { Reply } from './reply'
-import { Tag } from './tag'
-import { User } from './user'
+import { Reply } from './reply';
+import { Tag } from './tag';
+import { User } from './user';
 
 export class Thread {
     public id: number;

@@ -25,7 +25,7 @@ export class ForumComponent implements OnInit {
 
     // Filter
     tags: Tag[];
-    showAll: boolean = true;
+    showAll = true;
 
     // Same as private threadservice;  threadservice = ThreadService... Some neat DI
     constructor(
@@ -56,7 +56,7 @@ export class ForumComponent implements OnInit {
 
     tagFilter(tag: Tag, index: number, array: any): boolean {
         // Ignore intellisense here, "this" refers to "thread.tag", check filterTags below.
-        return (tag.checked === true && tag.id === this.id)
+        return (tag.checked === true && tag.id === this.id);
     }
 
     clickTag(tag: Tag): void {
