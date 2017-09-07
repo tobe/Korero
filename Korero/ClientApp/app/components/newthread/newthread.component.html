@@ -13,13 +13,19 @@
                 Thread title is required.
         </small>
     </div>
-    <div class="dropdown">
-        <select [(ngModel)]="selectedTag"
-                name="selectedTag"
-                class="custom-select"
-                [ngStyle]="{'border-color': selectedTag?.color}">
-            <option *ngFor="let tag of tags" [ngValue]="tag">{{ tag.label }}</option>
-        </select>
+    <div class="form-group">
+        <div class="dropdown">
+            <select [(ngModel)]="selectedTag"
+                    name="selectedTag"
+                    class="custom-select"
+                    [ngStyle]="{'border-color': selectedTag?.color}">
+                <option *ngFor="let tag of tags" [ngValue]="tag">{{ tag.label }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <h4>Live preview</h4>
+        <div [innerHTML]="reply?.body | MarkdownToHtml"></div>
     </div>
     <div class="form-group">
         <app-simplemde [(model)]="reply.body" required></app-simplemde>

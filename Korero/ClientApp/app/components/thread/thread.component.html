@@ -16,7 +16,11 @@
             <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
             <div class="media-body">
                 <!-- Reply body -->
-                <p *ngIf="!isEditable(i)" (click)="setEditable(i, true)">{{ reply.body }}</p>
+                <!--<p *ngIf="!isEditable(i)" (click)="setEditable(i, true)">{{ reply.body | MarkdownToHtml }}</p>-->
+                <div *ngIf="!isEditable(i)"
+                     (click)="setEditable(i, true)"
+                     [innerHTML]="reply.body | MarkdownToHtml">
+                </div>
 
                 <!-- Inline edit-->
                 <form *ngIf="isEditable(i)" (ngSubmit)="updateReply(reply.id, i)">

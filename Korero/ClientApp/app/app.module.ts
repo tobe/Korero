@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 // Vendor components
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 
 // Own components
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
         SlimLoadingBarModule.forRoot(), // Singleton
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
+        MarkdownToHtmlModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'forum', component: ForumComponent },
