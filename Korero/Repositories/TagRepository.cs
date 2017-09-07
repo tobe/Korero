@@ -22,5 +22,15 @@ namespace Korero.Repositories
         {
             return this._context.Tag;
         }
+
+        /// <summary>
+        /// Returns a single tag by its id
+        /// </summary>
+        /// <param name="id">The tag id</param>
+        /// <returns></returns>
+        public Tag GetTag(int id)
+        {
+            return this._context.Tag.Where(t => t.ID == id).SingleOrDefault();
+        }
     }
 }

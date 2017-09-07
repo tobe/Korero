@@ -6,6 +6,7 @@ using Korero.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
+using Korero.Models.ApiDtos;
 
 namespace Korero.Controllers.API
 {
@@ -16,15 +17,18 @@ namespace Korero.Controllers.API
         private readonly IThreadRepository _threadRepository;
         private readonly IReplyRepository _replyRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITagRepository _tagRepository;
 
         public ThreadController(
             IThreadRepository threadRepository,
             IReplyRepository replyRepository,
+            ITagRepository tagRepository,
             UserManager<ApplicationUser> userManager)
         {
             this._threadRepository = threadRepository;
             this._userManager = userManager;
             this._replyRepository = replyRepository;
+            this._tagRepository = tagRepository;
         }
 
         /// <summary>
@@ -61,8 +65,43 @@ namespace Korero.Controllers.API
 
             if (thread == null)
                 return NotFound();
-                        
+
             return Ok(thread);
+        }
+
+        /// <summary>
+        /// Creates a new thread
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("")] //  POST /api/thread
+        public async Task<IActionResult> CreateThread([FromBody] NewThreadDto data)
+        {
+            if (data == null) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Check whether the tag even exists
+            Tag tag = this._tagRepository.GetTag(data.TagId);
+            if (tag == null)
+                return BadRequest();
+
+            // Tag exists, the title is verified by the first two lines.
+            // Construct a Thread and add it.
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
+            Thread thread = new Thread()
+            {
+                Title = data.Title,
+                DateCreated = DateTime.Now,
+                Views = 0,
+                Author = user,
+                Tag = tag
+            };
+
+            if (this._threadRepository.AddThread(thread))
+                return Ok(thread);
+
+            return BadRequest();
         }
 
         [HttpPost]

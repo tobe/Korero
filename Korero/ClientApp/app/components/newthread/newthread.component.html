@@ -1,4 +1,4 @@
-<form ngNativeValidate>
+<form (ngSubmit)="addThread()" ngNativeValidate>
     <div class="form-group">
         <input [(ngModel)]="thread.title"
                name="title"

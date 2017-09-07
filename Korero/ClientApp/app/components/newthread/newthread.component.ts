@@ -43,4 +43,7 @@ export class NewThreadComponent implements OnInit {
         });
     }
 
+    addThread(): void {
+
+    }
 }

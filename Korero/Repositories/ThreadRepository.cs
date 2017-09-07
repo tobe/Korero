@@ -19,6 +19,25 @@ namespace Korero.Repositories
         }
 
         /// <summary>
+        /// Adds a new thread 
+        /// </summary>
+        /// <param name="thread">The thread to add</param>
+        /// <returns></returns>
+        public bool AddThread(Thread thread)
+        {
+            // Just add it. All the verification is done beforehand
+            try
+            {
+                this._context.Thread.Add(thread);
+                this._context.SaveChanges();
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Removes a thread specified by its id
         /// </summary>
         /// <param name="id">Thread id</param>

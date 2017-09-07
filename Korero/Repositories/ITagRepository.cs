@@ -6,5 +6,6 @@ namespace Korero.Repositories
     public interface ITagRepository
     {
         IEnumerable<Tag> GetTags();
+        Tag GetTag(int id);
     }
 }
