@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 import { ThreadService } from './services/thread.service';
 
@@ -22,6 +23,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
   declarations: [
       AppComponent,
       HomeComponent,
+      AvatarComponent,
       ExcerptFilter
   ],
   imports: [
@@ -32,7 +34,7 @@ import { ExcerptFilter } from './filters/excerpt.filter';
       BrowserAnimationsModule,
       RouterModule.forRoot([
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: '**', redirectTo: 'home' }, // --> ^
+          { path: '**', redirectTo: 'home' },
           { path: 'home', component: HomeComponent }
       ])
   ],
