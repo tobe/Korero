@@ -289,8 +289,9 @@ __pycache__/
 
 # Ignore JS crap & output dirs
 *.js
-Korero/wwwroot/dist/*
-Korero/wwwroot/*
-!Korero/wwwroot/.gitkeep
+*.map
+**/wwwroot/dist/*
+**/wwwroot/*
+!**/wwwroot/.gitkeep
 !Korero/webpack.production.js
 !Korero/webpack.development.js
