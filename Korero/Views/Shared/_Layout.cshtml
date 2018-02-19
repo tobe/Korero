@@ -18,9 +18,7 @@
         @RenderBody()
     </div>
 
-    <script src="~/dist/polyfills.bundle.js"></script>
-    <script src="~/dist/vendor.bundle.js"></script>
-    <script src="~/dist/app.bundle.js"></script>
+    @RenderSection("Scripts", required: false)
 
     <!-- Google's Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
