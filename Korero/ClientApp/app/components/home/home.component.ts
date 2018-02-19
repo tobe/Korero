@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomeComponent implements OnInit {
     // Will hold the results of the API call
-    public threads: Observable<ThreadData>;
+    public threads: ThreadData;
 
     // Pagination stuff
     public total = 0;
@@ -32,7 +32,10 @@ export class HomeComponent implements OnInit {
     }
 
     getThreads(): void {
-        this.threads = this.threadService.getThreads(this.page);
+        this.threadService.getThreads(this.page).subscribe(data => {
+            this.threads = data;
+            console.log(this.threads);
+        });
     }
 
     goToPage(n: number): void {

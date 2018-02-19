@@ -1,1 +1,29 @@
-<p>hi</p>
+<ng-container *ngFor="let thread of threads?.data">
+    {{ thread.show }}
+    <div class="row align-items-center thread">
+        <ul class="list-unstyled col-8">
+            <li class="media">
+                <div class="media-body" routerLink="/thread/{{ thread.id }}">
+                    <h4 class="mt-0 mb-1 thread-title">
+                        <span class="badge" [ngStyle]="{'background-color': thread.tag.color}">
+                            {{ thread.tag.label }}
+                        </span>
+                        {{ thread.title }}
+                    </h4>
+                    <p>{{ thread.replies[0].body | excerpt:50 }}</p>
+                    <div class="info">
+                        <small class="text-success">@{{ thread.author.userName }}</small>
+                        &ndash;
+                        <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="col">
+            <span class="thread-info">{{ thread.replies.length }}</span>
+        </div>
+        <div class="col">
+            <span class="thread-info">{{ thread.views }}</span>
+        </div>
+    </div>
+</ng-container>

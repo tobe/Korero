@@ -15,10 +15,14 @@ import { HomeComponent } from './components/home/home.component';
 
 import { ThreadService } from './services/thread.service';
 
+import { ExcerptFilter } from './filters/excerpt.filter';
+
+
 @NgModule({
   declarations: [
       AppComponent,
-      HomeComponent
+      HomeComponent,
+      ExcerptFilter
   ],
   imports: [
       CommonModule,

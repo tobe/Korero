@@ -296,4 +296,5 @@ __pycache__/
 !**/wwwroot/.gitkeep
 !Korero/webpack.production.js
 !Korero/webpack.development.js
+!Korero/karma.conf.js
 Korero/app.db
