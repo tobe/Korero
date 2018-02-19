@@ -1,5 +1,30 @@
 .media-body {
     cursor: pointer;
+    overflow: hidden;
+}
+
+@media (max-width: 575.98px) {
+    .legend {
+        display: none;
+    }
+
+    .replies-col {
+        display: none;
+    }
+
+    .views-col {
+        display: none;
+    }
+}
+
+.replies {
+    font-size: 1.3rem;
+    margin-left: -1.2rem;
+}
+
+.views {
+    font-size: 1.3rem;
+    margin-left: -1.2rem;
 }
 
 .thread {

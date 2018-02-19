@@ -1,7 +1,13 @@
+<div class="row legend">
+    <div class="col-sm-8"></div>
+    <div class="col-sm replies">Replies</div>
+    <div class="col-sm views">Views</div>
+</div>
+
 <ng-container *ngFor="let thread of threads?.data">
     {{ thread.show }}
     <div class="row align-items-center thread">
-        <ul class="list-unstyled col-8">
+        <ul class="list-unstyled col-sm-8">
             <li class="media">
                 <div class="media-body" routerLink="/thread/{{ thread.id }}">
                     <h4 class="mt-0 mb-1 thread-title">
@@ -19,10 +25,10 @@
                 </div>
             </li>
         </ul>
-        <div class="col">
+        <div class="col-sm replies-col">
             <span class="thread-info">{{ thread.replies.length }}</span>
         </div>
-        <div class="col">
+        <div class="col-sm views-col">
             <span class="thread-info">{{ thread.views }}</span>
         </div>
     </div>
