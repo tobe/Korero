@@ -30,8 +30,4 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="cd $(ProjectDir)\Korero&#xD;&#xA;del app.db" />
-  </Target>
-
 </Project>

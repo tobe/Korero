@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     getThreads(): void {
         this.threadService.getThreads(this.page).subscribe(data => {
             this.threads = data;
-            console.log(this.threads);
+            this.total = data.total;
         });
     }
 

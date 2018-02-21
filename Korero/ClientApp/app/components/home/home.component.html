@@ -34,3 +34,10 @@
         </div>
     </div>
 </ng-container>
+
+<app-pagination (goPage)="goToPage($event)"
+                (goNext)="onNext()"
+                (goPrev)="onPrev()"
+                [page]="page"
+                [perPage]="limit"
+                [count]="total"></app-pagination>
