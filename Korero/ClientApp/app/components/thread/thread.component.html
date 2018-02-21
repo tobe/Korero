@@ -1,3 +1,55 @@
-<p>
-  thread works!
-</p>
+<h2>{{ thread?.title }}<span class="badge badge-secondary">New</span></h2>
+
+<div class="thread-actions">
+    <!-- Show a delete button, if applicable -->
+    <button type="button" class="btn btn-danger"
+            (click)="deleteThread()"
+            *ngIf="thread?.author.userName == user?.userName">
+        Delete
+    </button>
+</div>
+
+
+<div class="row align-items-center thread" *ngFor="let reply of replies; let i = index" [attr.data-index]="i">
+    <ul class="list-unstyled col-8">
+        <li class="media">
+            <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
+            <div class="media-body">
+                <!-- Reply body -->
+                <div
+                     [innerHTML]="reply.body | MarkdownToHtml">
+                </div>
+
+                <!-- Reply information -->
+                <div class="info">
+                    <small class="text-success">@{{ reply.author.userName }}</small>
+                    <small class="text-danger" *ngIf="thread?.author.userName == reply.author.userName">
+                        <strong>
+                            <abbr title="Original poster" class="initialism">[OP]</abbr>
+                        </strong>
+                    </small>
+                    &ndash;
+                    <small class="text-secondary">{{ reply.dateCreated | date:'dd.MM.yyyy @ H:mm' }}.</small>
+                    <small class="text-secondary" *ngIf="reply.dateCreated != reply.dateUpdated">Edited at: {{ reply.dateUpdated | date:'dd.MM.yyyy @ H:mm' }}*</small>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-10 addreply">
+        <form (ngSubmit)="addReply()" *ngIf="this.page == this.lastPage()">
+            <app-simplemde [(model)]="newReply.body"></app-simplemde>
+            <input type="submit" class="btn btn-primary" value="Reply" />
+        </form>
+    </div>
+    <div class="col-md-2 ml-auto">
+        <app-pagination (goPage)="goToPage($event)"
+                        (goNext)="onNext()"
+                        (goPrev)="onPrev()"
+                        [page]="page"
+                        [perPage]="limit"
+                        [count]="total"></app-pagination>
+    </div>
+</div>

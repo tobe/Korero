@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
 
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private threadService: ThreadService,
-        private router: Router
+        private router: RouterModule
     ) { }
 
     ngOnInit(): void {

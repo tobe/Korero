@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { ThreadData } from '../models/thread';
+import { ThreadData, Thread } from '../models/thread';
 
 @Injectable()
 export class ThreadService {
-    private endpoint = '/api/thread/';
+    private endpoint = '/api/thread';
 
     constructor(private _http: HttpClient) { }
 
@@ -16,6 +16,20 @@ export class ThreadService {
         return this._http.get<ThreadData>(`${this.endpoint}/page/${page}`)
             .pipe(
                 catchError(this.handleError<ThreadData>('getThreads'))
+            );
+    }
+
+    getThread(id: number): Observable<Thread> {
+        return this._http.get<Thread>(`${this.endpoint}/${id}`)
+            .pipe(
+                catchError(this.handleError<Thread>('getThread'))
+            );
+    }
+
+    deleteThread(id: number): Observable<Response> {
+        return this._http.delete<Response>(`${this.endpoint}/${id}`)
+            .pipe(
+                catchError(this.handleError<Response>('deleteThread'))
             );
     }
 

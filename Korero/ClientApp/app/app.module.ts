@@ -14,18 +14,25 @@ import { RouterModule } from '@angular/router';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ThreadComponent } from './components/thread/thread.component';
+import { ErrorComponent } from './components/error/error.component';
+import { SimpleMDEComponent } from './components/simplemde/simplemde.component';
 
 // Services
 import { ThreadService } from './services/thread.service';
+import { ReplyService } from './services/reply.service';
+import { AuthService } from './services/auth.service';
 
 // Filters
 import { ExcerptFilter } from './filters/excerpt.filter';
+import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 
 
 @NgModule({
@@ -34,7 +41,10 @@ import { ExcerptFilter } from './filters/excerpt.filter';
       AppComponent,
       HomeComponent,
       AvatarComponent,
-      PaginationComponent
+      PaginationComponent,
+      ThreadComponent,
+      ErrorComponent,
+      SimpleMDEComponent
   ],
   imports: [
       CommonModule,
@@ -43,14 +53,16 @@ import { ExcerptFilter } from './filters/excerpt.filter';
       FormsModule,
       BrowserAnimationsModule,
       RouterModule.forRoot([
+          { path: 'thread/:id', component: ThreadComponent },
+          { path: 'home', component: HomeComponent },
           { path: '', redirectTo: 'home', pathMatch: 'full' },
-          { path: '**', redirectTo: 'home' },
-          { path: 'home', component: HomeComponent }
-      ]),
+          { path: '**', component: ErrorComponent }
+      ], { enableTracing: false }),
+      SimpleNotificationsModule.forRoot(),
       NgProgressModule.forRoot(),
       NgProgressHttpModule,
-      NgProgressModule.forRoot(),
-      NgProgressRouterModule
+      NgProgressRouterModule,
+      MarkdownToHtmlModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

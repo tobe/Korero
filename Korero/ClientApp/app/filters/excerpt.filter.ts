@@ -6,8 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ExcerptFilter implements PipeTransform {
     transform(text: String, length: any): any {
-        if (!text || !length)
+        if (!text || !length) {
             return text;
+        }
 
         return (text.length > length) ? text.substr(0, length) + '...' : text;
     }
