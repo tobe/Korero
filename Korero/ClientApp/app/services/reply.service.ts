@@ -13,7 +13,7 @@ export class ReplyService {
     constructor(private _http: HttpClient) { }
 
     getReplies(id: number, page: number): Observable<ReplyData> {
-        return this._http.get<ReplyData>(this.endpoint)
+        return this._http.get<ReplyData>(`${this.endpoint}/replies/${id}/page/${page}`)
             .pipe(
             catchError(this.handleError<ReplyData>('getReplies'))
             );

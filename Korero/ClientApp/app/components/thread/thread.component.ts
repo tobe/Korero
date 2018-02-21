@@ -24,7 +24,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     public user: User;
 
     // New reply to the thread (to be made...)
-    public newReply: Reply;
+    public newReply: Reply = new Reply();
 
     // Thread ID
     public id: number;

@@ -52,5 +52,61 @@ namespace Korero.Repositories
 
             return (paginatedData, query.Count());
         }
+
+        /// <summary>
+        /// Returns a single thread
+        /// </summary>
+        /// <param name="ThreadId">The ID of the thread to return</param>
+        /// <returns></returns>
+        public Thread GetThread(int ThreadId)
+        {
+            return this._context.Thread.Where(t => t.ID == ThreadId)
+                .Include(t => t.Tag)
+                .Include(t => t.Author)
+                .SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Adds a new thread 
+        /// </summary>
+        /// <param name="thread">The thread to add</param>
+        /// <returns></returns>
+        public bool AddThread(Thread thread)
+        {
+            // Just add it. All the verification is done beforehand
+            try
+            {
+                this._context.Thread.Add(thread);
+                this._context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Removes a thread specified by its id
+        /// </summary>
+        /// <param name="id">Thread id</param>
+        /// <param name="currentUser">Currently logged in user</param>
+        /// <returns>true on success, false on failure</returns>
+        public bool DeleteThread(int id, IIdentity currentUser)
+        {
+            Thread thread = this._context.Thread.Include(t => t.Author)
+                .SingleOrDefault(t => t.ID == id);
+
+            if (thread == null)
+                return false;
+
+            // Check if the user trying to delete it is the author of the thread
+            if (thread.Author.UserName != currentUser.Name)
+                return false;
+
+            this._context.Thread.Remove(thread);
+            this._context.SaveChanges();
+            return true;
+        }
     }
 }

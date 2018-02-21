@@ -35,6 +35,7 @@ namespace Korero
 
             // Add application services.
             services.AddScoped<IThreadRepository, ThreadRepository>();
+            services.AddScoped<IReplyRepository,  ReplyRepository>();
 
             // Add MVC6
             services.AddMvc()
