@@ -53,6 +53,7 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
       FormsModule,
       BrowserAnimationsModule,
       RouterModule.forRoot([
+          { path: 'error/:id', component: ErrorComponent },
           { path: 'thread/:id', component: ThreadComponent },
           { path: 'home', component: HomeComponent },
           { path: '', redirectTo: 'home', pathMatch: 'full' },

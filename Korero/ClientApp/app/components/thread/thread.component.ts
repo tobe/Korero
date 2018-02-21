@@ -100,6 +100,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
                 this.thread = then;
             },
             error => {
+                console.log('errorrrrrrrrrrrrr');
                 this.router.navigate(['/error/404']);
             }
         );
