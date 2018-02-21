@@ -4,18 +4,18 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { ThreadData } from '../models/thread';
+import { User } from '../models/user';
 
 @Injectable()
-export class ThreadService {
-    private endpoint = '/api/thread/';
+export class AuthService {
+    private endpoint = '/api/user/';
 
     constructor(private _http: HttpClient) { }
 
-    getThreads(page: number): Observable<ThreadData> {
-        return this._http.get<ThreadData>(`${this.endpoint}/page/${page}`)
+    getUser(): Observable<User> {
+        return this._http.get<User>(this.endpoint)
             .pipe(
-                catchError(this.handleError<ThreadData>('getThreads'))
+                catchError(this.handleError<User>('getUser'))
             );
     }
 
