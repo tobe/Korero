@@ -7,7 +7,7 @@ const _SimpleMDE: any = require('simplemde');
     selector: 'app-simplemde',
     template: `<textarea [(ngModel)]="model" placeholder="Content goes here..." #simplemde required></textarea>`
 })
-export class SimpleMDEComponent {
+export class SimpleMDEComponent implements AfterViewInit {
     @Input() model: any;
     @Output() modelChange = new EventEmitter<string>();
     @ViewChild('simplemde') textarea: ElementRef;

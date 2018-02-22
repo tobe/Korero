@@ -74,7 +74,7 @@ export class NewThreadComponent implements OnInit {
                         this.notificationService.error('Failure', 'Failed to create the thread!');
                         this.router.navigate(['/error/400']);
                     }
-                )
+                );
             },
             error => this.router.navigate(['/error/400'])
         );
