@@ -106,5 +106,26 @@ namespace Korero.Repositories
             this._context.SaveChanges();
             return true;
         }
+
+        /// <summary>
+        /// Updates the thread's view count
+        /// </summary>
+        /// <param name="thread">The thread view count to update</param>
+        public bool UpdateThreadViews(Thread thread)
+        {
+            // The thread has been passed on, bump the view count and let the magic happen...
+            thread.Views++;
+
+            try
+            {
+                this._context.Thread.Update(thread);
+                this._context.SaveChanges();
+
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
     }
 }

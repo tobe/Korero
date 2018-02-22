@@ -1,4 +1,4 @@
-<form (ngSubmit)="addThread()" ngNativeValidate>
+<form (ngSubmit)="addThread()">
     <div class="form-group">
         <input [(ngModel)]="thread.title"
                name="title"
@@ -7,7 +7,6 @@
                placeholder="Thread title"
                #title="ngModel"
                required>
-        <!-- || title.pristine -->
         <small [hidden]="title.valid"
                class="form-text text-danger" role="alert">
                 Thread title is required.

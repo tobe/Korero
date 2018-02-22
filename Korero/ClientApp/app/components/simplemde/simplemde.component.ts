@@ -19,7 +19,12 @@ export class SimpleMDEComponent {
         const mde = new _SimpleMDE({
             element: this.textarea.nativeElement,
             forceSync: true,
-            status: false
+            status: true,
+            autosave: true,
+            indentWithTabs: false,
+            promptURLs: true,
+            spellChecker: false,
+            tabSize: 4
         });
 
         mde.codemirror.on('change', function () {

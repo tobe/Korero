@@ -59,6 +59,9 @@ export class NewThreadComponent implements OnInit {
         // Check whether the title and the reply are not empty
         if (this.thread.title.length === 0 || this.reply.body.length === 0) { return; }
 
+        // Assign the selected tag to the new thread object
+        this.thread.tag = this.selectedTag;
+
         // Alles gut
         this.threadService.createThread(this.thread).subscribe(
             then => {
