@@ -1,7 +1,6 @@
 .thread {
     border-bottom: 1px solid #EEE;
-    margin-bottom: 2rem;
-    margin-top: -1rem;
+    margin-bottom: 1rem;
 }
 
 .avatar {
@@ -12,8 +11,10 @@
     padding: .5rem 0 1rem 0;
 }
 
-.addreply {
-    margin-bottom: 2rem;
+@media (max-width: 767.98px) {
+    .addreply {
+        margin-bottom: 1rem;
+    }
 }
 
 input[type="submit"] {

@@ -24,6 +24,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { ThreadComponent } from './components/thread/thread.component';
 import { ErrorComponent } from './components/error/error.component';
 import { SimpleMDEComponent } from './components/simplemde/simplemde.component';
+import { NewThreadComponent } from './components/newthread/newthread.component';
 
 // Services
 import { ThreadService } from './services/thread.service';
@@ -44,7 +45,8 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
       PaginationComponent,
       ThreadComponent,
       ErrorComponent,
-      SimpleMDEComponent
+      SimpleMDEComponent,
+      NewThreadComponent
   ],
   imports: [
       CommonModule,
@@ -55,6 +57,7 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
       RouterModule.forRoot([
           { path: 'error/:id', component: ErrorComponent },
           { path: 'thread/:id', component: ThreadComponent },
+          { path: 'newthread', component: NewThreadComponent },
           { path: 'home', component: HomeComponent },
           { path: '', redirectTo: 'home', pathMatch: 'full' },
           { path: '**', component: ErrorComponent }

@@ -1,3 +1,16 @@
+<button type="button" class="btn btn-dark" [routerLink]="['/newthread']">New thread</button>
+
+<div class="row taglist">
+    <h5>
+        <a *ngFor="let tag of tags"
+           class="badge"
+           [ngStyle]="{'background-color': tag.color, 'opacity': tag.checked ? 1 : 0.3}"
+           (click)="clickTag(tag)">
+            {{ tag.label }}
+        </a>
+    </h5>
+</div>
+
 <div class="row legend">
     <div class="col-sm-8"></div>
     <div class="col-sm replies">Replies</div>

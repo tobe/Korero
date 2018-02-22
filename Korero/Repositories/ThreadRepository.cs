@@ -92,16 +92,14 @@ namespace Korero.Repositories
         /// <param name="id">Thread id</param>
         /// <param name="currentUser">Currently logged in user</param>
         /// <returns>true on success, false on failure</returns>
-        public bool DeleteThread(int id, IIdentity currentUser)
+        public bool DeleteThread(int ThreadId, IIdentity CurrentUser)
         {
-            Thread thread = this._context.Thread.Include(t => t.Author)
-                .SingleOrDefault(t => t.ID == id);
-
+            Thread thread = this.GetThread(ThreadId);
             if (thread == null)
                 return false;
 
             // Check if the user trying to delete it is the author of the thread
-            if (thread.Author.UserName != currentUser.Name)
+            if (thread.Author.UserName != CurrentUser.Name)
                 return false;
 
             this._context.Thread.Remove(thread);

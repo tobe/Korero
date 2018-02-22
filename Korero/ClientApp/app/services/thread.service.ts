@@ -33,6 +33,13 @@ export class ThreadService {
             );
     }
 
+    createThread(thread: Thread): Observable<Thread> {
+        return this._http.post<Thread>(`${this.endpoint}`, thread)
+            .pipe(
+                catchError(this.handleError<Thread>('createThread'))
+            );
+    }
+
     /**
      * Handle Http operation that failed.
      * Let the app continue.

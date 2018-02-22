@@ -66,6 +66,21 @@ namespace Korero.Controllers.API
         }
 
         /// <summary>
+        /// Deletes a thread specified by the ThreadId
+        /// </summary>
+        /// <param name="ThreadId">The ID of the Thread to delete</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("{ThreadId:int}")] // DELETE /api/thread/<id:int>
+        public IActionResult DeleteThread(int ThreadId)
+        {
+            if (this._threadRepository.DeleteThread(ThreadId, User.Identity))
+                return Ok();
+
+            return BadRequest();
+        }
+
+        /// <summary>
         /// Returns all replies to a thread specified by the id
         /// </summary>
         /// <param name="id">Thread ID</param>
@@ -84,6 +99,43 @@ namespace Korero.Controllers.API
                 return NotFound();
 
             return Ok(new { total = replies.Item2, data = replies.Item1 });
+        }
+
+        /// <summary>
+        /// Adds a new reply. async is used because of the await usermanager...
+        /// </summary>
+        /// <param name="ThreadId">The ThreadID to add the reply to</param>
+        /// <param name="Reply">The reply itself</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{ThreadId:int}")] // POST /api/thread/<ThreadId: int>
+        public async Task<IActionResult> AddReply(int ThreadId, [FromBody] Reply Reply)
+        {
+            // Verify the data model
+            if (Reply == null)       return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            // Grab some stuff we need
+            DateTime now = DateTime.Now;
+            ApplicationUser user = await this._userManager.GetUserAsync(HttpContext.User);
+            Thread thread = this._threadRepository.GetThread(ThreadId);
+            if (thread == null) // Verify the thread we're trying to access exists
+                return BadRequest();
+
+            // Construct a reply
+            Reply newReply = new Reply()
+            {
+                DateCreated = now,
+                DateUpdated = now,
+                Author = user,
+                Body = Reply.Body,
+                Thread = thread
+            };
+
+            if (this._replyRepository.AddReply(ThreadId, newReply))
+                return Ok(newReply);
+
+            return BadRequest();
         }
     }
 }

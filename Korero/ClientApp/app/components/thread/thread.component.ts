@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 
@@ -43,7 +43,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private authService: AuthService,
         private router: Router,
-        private notificationService: NotificationsService) { }
+        private notificationService: NotificationsService,
+        private ref: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
@@ -100,7 +101,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
                 this.thread = then;
             },
             error => {
-                console.log('errorrrrrrrrrrrrr');
                 this.router.navigate(['/error/404']);
             }
         );
@@ -113,7 +113,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.threadService.deleteThread(this.id).subscribe(
             next => {
                 // 200 OK
-                this.router.navigate(['/forum']);
+                this.router.navigate(['/']);
                 this.notificationService.success('Success', 'Thread has been deleted');
             },
             error => {
@@ -132,8 +132,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
             next => {
                 // Reply was successful, head to the latest page
                 this.notificationService.success('Success', 'The reply has been added');
-                this.goToPage(this.lastPage());
+
                 this.newReply.body = ''; // Blank out the textarea
+                // Bump the count so the lastPage correctly wraps around
+                this.total++;
+                this.goToPage(this.lastPage());
             },
             error => {
                 // Something got messed up...

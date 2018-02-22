@@ -11,7 +11,7 @@
 
 
 <div class="row align-items-center thread" *ngFor="let reply of replies; let i = index" [attr.data-index]="i">
-    <ul class="list-unstyled col-8">
+    <ul class="list-unstyled col-md-10">
         <li class="media">
             <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
             <div class="media-body">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="row">
-    <div class="col-10 addreply">
+    <div class="col-sm-12 col-md-10 addreply">
         <form (ngSubmit)="addReply()" *ngIf="this.page == this.lastPage()">
             <app-simplemde [(model)]="newReply.body"></app-simplemde>
             <input type="submit" class="btn btn-primary" value="Reply" />
