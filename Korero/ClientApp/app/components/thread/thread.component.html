@@ -11,14 +11,15 @@
 
 
 <div class="row align-items-center thread" *ngFor="let reply of replies; let i = index" [attr.data-index]="i">
-    <ul class="list-unstyled col-md-10">
+    <ul class="list-unstyled col">
         <li class="media">
             <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
             <div class="media-body">
                 <!-- Reply body -->
                 <div 
                      [innerHTML]="reply.body | MarkdownToHtml"
-                     (click)="setEditable(i, true)">
+                     (click)="setEditable(i, true)"
+                     class="text">
                 </div>
 
                 <!-- Inline edit -->
@@ -39,7 +40,7 @@
                     </small>
                     &ndash;
                     <small class="text-secondary">{{ reply.dateCreated | date:'dd.MM.yyyy @ H:mm' }}.</small>
-                    <small class="text-secondary" *ngIf="reply.dateCreated != reply.dateUpdated">Edited at: {{ reply.dateUpdated | date:'dd.MM.yyyy @ H:mm' }}*</small>
+                    <small class="text-secondary" *ngIf="reply.dateUpdated">Edited at: {{ reply.dateUpdated | date:'dd.MM.yyyy @ H:mm' }}*</small>
                 </div>
             </div>
         </li>

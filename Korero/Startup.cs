@@ -51,8 +51,6 @@ namespace Korero
              * All this works well with pointers in the actual *memory* of the program, but
              * when returning data as JSON, the return will build up...  infinitely.
              * */
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

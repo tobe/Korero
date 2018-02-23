@@ -88,6 +88,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
                 this.replies = response.data;  // Update the actual replies
                 this.total = response.total; // And how many of them there are
 
+                console.log(this.replies);
+
                 // Wipe and allocate enough memory in the editedReplies array
                 this.editedReplies = [];
                 for (let i = 0; i < response.total; i++) {
@@ -156,8 +158,15 @@ export class ThreadComponent implements OnInit, OnDestroy {
         );
     }
 
+    /**
+     * Toggles the editing of a response, inline.
+     * @param index The index of the reply (response) to edit or stop editing
+     * @param bool True for editable, false for not editable
+     */
     setEditable(index: number, bool: boolean): void {
         const reply = this.replies[index];
+
+        console.log(reply, this.user);
 
         // We can only edit our own replies
         if (reply.author.userName != this.user.userName) return;
@@ -166,6 +175,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
         reply.editing = bool;
     }
 
+    /**
+     * Updates a reply by the index
+     * @param index the index of the reply to update
+     */
     updateReply(index: number): void {
         // Get the edited reply
         const reply = this.editedReplies[index];

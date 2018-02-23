@@ -21,16 +21,16 @@
     <div class="row align-items-center thread">
         <ul class="list-unstyled col-sm-8">
             <li class="media">
-                <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-center mr-3" alt="User profile image"></app-avatar>
+                <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex mr-3 avatar" alt="User profile image"></app-avatar>
                 <div class="media-body" [routerLink]="['/thread', thread.id]">
-                    <h4 class="mt-0 mb-1 thread-title">
-                        <span class="badge" [ngStyle]="{'background-color': thread.tag.color}">
-                            {{ thread.tag.label }}
-                        </span>
+                    <h5 class="mt-0 mb-1 thread-title">
                         {{ thread.title }}
-                    </h4>
+                    </h5>
                     <p>{{ thread.replies[0].body | excerpt:50 }}</p>
                     <div class="info">
+                        <small class="badge" [ngStyle]="{'background-color': thread.tag.color}">
+                            {{ thread.tag.label }}
+                        </small>
                         <small class="text-success">@{{ thread.author.userName }}</small>
                         &ndash;
                         <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>

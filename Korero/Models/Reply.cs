@@ -11,7 +11,7 @@ namespace Korero.Models
     {
         public int ID { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public ApplicationUser Author { get; set; }
 

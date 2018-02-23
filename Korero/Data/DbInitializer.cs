@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Korero.Models;
 using System;
 using System.Collections.Generic;
+using Bogus;
 
 namespace Korero.Data
 {
@@ -26,27 +27,27 @@ namespace Korero.Data
 
         public static Thread GenerateRandomThread(ApplicationUser User, ApplicationUser AlternateUser, Tag Tag)
         {
-            DateTime Now = DateTime.Now;
+            // Use Bogus to spawn a fake thread
+            Thread newThread = new Faker<Thread>()
+                .RuleFor(t => t.Title, f => f.Lorem.Sentence(15))
+                .RuleFor(t => t.DateCreated, f => f.Date.Past())
+                .RuleFor(t => t.Views, f => f.Random.Even(0, 50));
 
-            Thread newThread = new Thread()
-            {
-                Title = RandomString(15),
-                DateCreated = Now,
-                Author = RandomBoolean() ? User : AlternateUser,
-                Tag = Tag,
-                Replies = new List<Reply>(),
-                Views = random.Next(0, 50)
-            };
+            newThread.Author = RandomBoolean() ? User : AlternateUser;
+            newThread.Tag = Tag;
+            newThread.Replies = new List<Reply>();
 
-            for (int i = 0; i < random.Next(4, 10); i++)
+            // And some fake replies
+            for(int i = 0; i < random.Next(4, 15); i++)
             {
-                newThread.Replies.Add(new Reply()
-                {
-                    DateCreated = Now.AddDays(random.Next(-10, -3)).AddHours(random.Next(-24, -1)),
-                    DateUpdated = Now.AddHours(random.Next(-23, -2)),
-                    Body = RandomString(256),
-                    Author = RandomBoolean() ? User : AlternateUser
-                });
+                Reply newReply = new Faker<Reply>()
+                    .RuleFor(r => r.DateCreated, f => f.Date.Past())
+                    //.RuleFor(r => r.DateUpdated, f => f.Date.Future())
+                    .RuleFor(r => r.Body, f => f.Lorem.Paragraphs());
+                newReply.Author = RandomBoolean() ? User : AlternateUser;
+                newReply.DateUpdated = null;
+
+                newThread.Replies.Add(newReply);
             }
 
             return newThread;

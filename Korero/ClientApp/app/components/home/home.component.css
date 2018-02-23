@@ -40,10 +40,6 @@
         border: 1px solid #EEE;
     }
 
-.thread-title {
-    font-weight: 700;
-}
-
 .media-body > p {
     margin-bottom: 0;
 }
@@ -72,4 +68,8 @@ a.badge {
 
 .taglist {
     padding-left: 1rem;
+}
+
+.avatar {
+    padding-top: .4rem; /* To negate the padding by the media */
 }
