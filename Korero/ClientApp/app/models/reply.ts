@@ -7,6 +7,8 @@ export class Reply {
     public body: string;
 
     public author: User;
+
+    public editing = false; // For inline edit purposes
 }
 export class ReplyData {
     public total: number;

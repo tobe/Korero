@@ -26,6 +26,9 @@ export class ThreadComponent implements OnInit, OnDestroy {
     // New reply to the thread (to be made...)
     public newReply: Reply = new Reply();
 
+    // Future edited replies (for inline edit)
+    public editedReplies: Reply[] = [];
+
     // Thread ID
     public id: number;
 
@@ -83,7 +86,15 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.replyService.getReplies(this.id, this.page).subscribe(
             response => {
                 this.replies = response.data;  // Update the actual replies
-                this.total   = response.total; // And how many of them there are
+                this.total = response.total; // And how many of them there are
+
+                // Wipe and allocate enough memory in the editedReplies array
+                this.editedReplies = [];
+                for (let i = 0; i < response.total; i++) {
+                    // Clone the reply and add it into the newly created array
+                    let clonedReply = ThreadComponent.deepCopy(this.replies[i]);
+                    this.editedReplies.push(clonedReply);
+                }
             },
             error => {
                 this.router.navigate(['/error/404']);
@@ -145,8 +156,33 @@ export class ThreadComponent implements OnInit, OnDestroy {
         );
     }
 
-    updateReply(id: number) {
+    setEditable(index: number, bool: boolean): void {
+        const reply = this.replies[index];
 
+        // We can only edit our own replies
+        if (reply.author.userName != this.user.userName) return;
+
+        // Set the boolean
+        reply.editing = bool;
+    }
+
+    updateReply(index: number): void {
+        // Get the edited reply
+        const reply = this.editedReplies[index];
+        if (!reply) return;
+
+        // Update
+        this.replyService.updateReply(reply).subscribe(
+            then => {
+                this.notificationService.success('Success', 'The reply has been updated');
+            },
+            error => {
+                this.notificationService.error('Failure', 'Failed to update the reply');
+            }
+        );
+
+        // Update the replies.
+        setTimeout(() => this.goToPage(this.page), 100);
     }
 
     /**
@@ -159,7 +195,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
                 this.notificationService.success('Success', 'The reply has been deleted');
 
                 // Redirect the user to the same page --> the reply will disappear :)
-                setTimeout(() => this.goToPage(this.page), 1000);
+                setTimeout(() => this.goToPage(this.page), 100);
             },
             error => {
                 this.notificationService.error('Failure', 'Failed to delete the reply');
@@ -182,5 +218,22 @@ export class ThreadComponent implements OnInit, OnDestroy {
     onPrev(): void {
         this.page--;
         this.getReplies();
+    }
+
+    /**
+     * Returns a deep copy of the object.
+     * Not gonna rely on lodash or some shit to use this, since Ang2 doesn't
+     * support this out of the box like ang1 does.
+     * @url https://stackoverflow.com/a/38722431
+     */
+    public static deepCopy(oldObj: any) {
+        let newObj = oldObj;
+        if (oldObj && typeof oldObj === 'object') {
+            newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
+            for (const i in oldObj) {
+                newObj[i] = this.deepCopy(oldObj[i]);
+            }
+        }
+        return newObj;
     }
 }

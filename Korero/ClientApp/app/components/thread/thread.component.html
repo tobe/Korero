@@ -16,9 +16,18 @@
             <app-avatar letter="{{ reply.author.userName.charAt(0).toUpperCase() }}" class="d-flex align-self-start mr-3 avatar" alt="User profile image"></app-avatar>
             <div class="media-body">
                 <!-- Reply body -->
-                <div
-                     [innerHTML]="reply.body | MarkdownToHtml">
+                <div 
+                     [innerHTML]="reply.body | MarkdownToHtml"
+                     (click)="setEditable(i, true)">
                 </div>
+
+                <!-- Inline edit -->
+                <form *ngIf="reply.editing" (ngSubmit)="updateReply(i)">
+                    <app-simplemde [(model)]="editedReplies[i].body"></app-simplemde>
+                    <input type="submit" class="btn btn-success" value="Update" />
+                    <button class="btn btn-warning" (click)="setEditable(i, false)">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteReply(reply.id)">Delete</button>
+                </form>
 
                 <!-- Reply information -->
                 <div class="info">

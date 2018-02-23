@@ -26,15 +26,15 @@ export class ReplyService {
             );
     }
 
-    updateReply(id: number, reply: Reply): Observable<Response> {
-        return this._http.put<Response>(`${this.endpoint}/${id}`, reply)
+    updateReply(reply: Reply): Observable<Response> {
+        return this._http.put<Response>(`/api/reply/${reply.id}`, reply)
             .pipe(
             catchError(this.handleError<Response>('updateReply'))
             );
     }
 
     deleteReply(id: number): Observable<Response> {
-        return this._http.delete<Response>(`${this.endpoint}/${id}`)
+        return this._http.delete<Response>(`/api/reply/${id}`)
             .pipe(
             catchError(this.handleError<Response>('deleteReply'))
             );

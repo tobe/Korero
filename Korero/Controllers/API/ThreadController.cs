@@ -92,7 +92,7 @@ namespace Korero.Controllers.API
         /// <param name="p">The page to retrieve the results from (pagination)</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("replies/{id:int}/page/{p:int}")] // GET /api/thread/r/<id:int>/page/<p:int>
+        [Route("replies/{id:int}/page/{p:int}")] // GET /api/thread/replies/<id:int>/page/<p:int>
         public IActionResult GetReplies(int id, int p)
         {
             // A page must be non-negative
