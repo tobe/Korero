@@ -20,11 +20,13 @@ export class SearchComponent implements OnInit {
         value = value.toLowerCase();
 
         // Just .filter...
-        let x = this.threads.filter(t => {
+        const newThreads = this.threads.filter(t => {
             return t.title.toLowerCase().indexOf(value) > -1 ||
                    t.replies[0].body.indexOf(value) > -1
         });
 
-        console.log(x);
+        this.threads = newThreads;
+
+        //console.log(x);
     }
 }

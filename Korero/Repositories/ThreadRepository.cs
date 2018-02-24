@@ -25,13 +25,7 @@ namespace Korero.Repositories
         /// <returns></returns>
         public (IEnumerable<Thread>, int) GetThreads(int? page)
         {
-            /*IQueryable<Thread> query = this._context.Thread.Include(t => t.Tag)
-                .Include(r => r.Replies)
-                .Include(t => t.Author)
-                .OrderByDescending(t => t.DateCreated);*/
-
-
-            // Ok, so, the issue is following: Return all the threads and their respective info
+            /* Ok, so, the issue is following: Return all the threads and their respective info
             // such as Tag, Author and sort them by DateCreated. However, also do return a SINGLE,
             // first reply of said thread, ordered by its DateCreated. To accomplish this **Explicit** loading
             // must be used...
@@ -51,9 +45,14 @@ namespace Korero.Repositories
                 this._context.Entry(q)
                 .Collection(r => r.Replies)
                 .Query()
-                .OrderByDescending(r => r.DateCreated).Take(1)
+                .OrderBy(r => r.DateCreated).Take(1)
                 .Load();
-            }
+            }*/
+
+            var query = this._context.Thread.Include(t => t.Tag)
+                .Include(t => t.Author)
+                .Include(r => r.Replies)
+                .OrderByDescending(t => t.DateCreated);
 
             var paginatedData = query.Paginate(
                 new PaginationInfo { PageNumber = page ?? 1, PageSize = 4 }
@@ -61,10 +60,10 @@ namespace Korero.Repositories
 
             // tfw u can't .Include(r => r.Replies.OrderBy())... FeelsBadMan
             // https://stackoverflow.com/questions/8447384/how-to-order-child-collections-of-entities-in-ef?rq=1
-            /*foreach (var q in paginatedData)
+            foreach (var q in paginatedData)
             {
                 q.Replies = q.Replies.OrderBy(x => x.DateCreated).ToList();
-            }*/
+            }
             // Note to self: idk why I was returning all replies when I only need the first one... sigh
 
             return (paginatedData, query.Count());

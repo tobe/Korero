@@ -40,6 +40,22 @@ namespace Korero.Repositories
 
         public bool DeleteReply(Reply reply)
         {
+            // Get the first reply -> explicitly load it
+            // https://msdn.microsoft.com/en-us/library/jj574232(v=vs.113).aspx#Explicitly Loading
+            var thread = this._context.Thread
+                .Where(t => t == reply.Thread)
+                .Single();
+            var firstReply = this._context.Entry(thread)
+                .Collection(r => r.Replies)
+                .Query()
+                .OrderBy(r => r.DateCreated)
+                .Take(1);
+                //.Load(); --> Using this would change the initial, "thread" query up there ^
+
+            // We cannot delete the first reply! Hehe
+            if (reply.ID == firstReply.FirstOrDefault().ID)
+                return false;
+
             try
             {
                 this._context.Reply.Remove(reply);
