@@ -1,16 +1,24 @@
-<button type="button" class="btn btn-dark" [routerLink]="['/newthread']">New thread</button>
+<div class="row">
+    <div class="col-sm-auto">
+        <button type="button" class="btn btn-dark" [routerLink]="['/newthread']">New thread</button>
+    </div>
+    <app-search [threads]="threads" class="col-sm search"></app-search>
+</div>
 
 <div *ngIf="threads">
     <app-tags [threads]="threads"></app-tags>
 </div>
 
-<div class="row legend">
+<div class="row legend" *ngIf="shownThreadCount() > 0">
     <div class="col-sm-8"></div>
     <div class="col-sm replies">Replies</div>
     <div class="col-sm views">Views</div>
 </div>
 
 <ng-container *ngFor="let thread of threads">
+    <div *ngIf="shownThreadCount() == 0" class="nothreads">
+        No threads have been found according to your criteria.
+    </div>
     <div class="row align-items-center thread" *ngIf="thread.show">
         <ul class="list-unstyled col-sm-8">
             <li class="media">
@@ -32,10 +40,10 @@
             </li>
         </ul>
         <div class="col-sm replies-col">
-            <span class="thread-info">{{ thread.replies.length }}</span>
+            <span class="thread-info" [ngClass]="{'padleft': thread.replies.length < 10}">{{ thread.replies.length }}</span>
         </div>
         <div class="col-sm views-col">
-            <span class="thread-info">{{ thread.views }}</span>
+            <span class="thread-info" [ngClass]="{'padleft': thread.views < 10}">{{ thread.views }}</span>
         </div>
     </div>
 </ng-container>

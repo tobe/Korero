@@ -31,6 +31,11 @@ export class HomeComponent implements OnInit {
         this.getThreads();
     }
 
+    shownThreadCount(): number {
+        if(this.threads)
+            return this.threads.filter(t => t.show === true).length;
+    }
+
     getThreads(): void {
         this.threadService.getThreads(this.page).subscribe(resp => {
             this.threads = resp.data;

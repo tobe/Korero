@@ -1,0 +1,25 @@
+.taglist {
+    padding-left: 1rem;
+}
+
+
+.badge {
+    margin-top: 1rem;
+    margin-right: .5rem;
+    color: #FFF;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+    .badge:hover {
+        opacity: 1 !important;
+    }
+
+a.badge {
+    color: #FFF;
+}
+
+    a.badge:hover {
+        color: #FFF;
+        cursor: pointer;
+    }

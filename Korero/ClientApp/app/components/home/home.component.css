@@ -19,12 +19,12 @@
 
 .replies {
     font-size: 1.3rem;
-    margin-left: -1.2rem;
+    margin-left: -.9rem;
 }
 
 .views {
     font-size: 1.3rem;
-    margin-left: -1.2rem;
+    /*margin-left: -1.2rem;*/
 }
 
 .thread {
@@ -48,28 +48,28 @@
     font-size: 2.2rem;
 }
 
-.badge {
-    margin-right: .5rem;
-    color: #FFF;
-}
-
-    .badge:hover {
-        opacity: 1 !important;
-    }
-
-a.badge {
-    color: #FFF;
-}
-
-    a.badge:hover {
-        color: #FFF;
-        cursor: pointer;
-    }
-
-.taglist {
-    padding-left: 1rem;
-}
-
 .avatar {
     padding-top: .4rem; /* To negate the padding by the media */
+}
+
+.badge {
+    color: #FFF;
+}
+
+.padleft {
+    padding-left: .5rem
+}
+
+.nothreads {
+    padding: 2rem;
+}
+
+.thread-title {
+    width: 95%;
+}
+
+@media (max-width: 575.98px) {
+    .search {
+        padding-top: .5rem;
+    }
 }

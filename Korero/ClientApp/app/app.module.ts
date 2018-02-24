@@ -26,6 +26,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { SimpleMDEComponent } from './components/simplemde/simplemde.component';
 import { NewThreadComponent } from './components/newthread/newthread.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { SearchComponent } from './components/search/search.component';
 
 // Services
 import { ThreadService } from './services/thread.service';
@@ -48,7 +49,8 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
       ErrorComponent,
       SimpleMDEComponent,
       NewThreadComponent,
-      TagsComponent
+      TagsComponent,
+      SearchComponent
   ],
   imports: [
       CommonModule,
