@@ -4,4 +4,5 @@
        placeholder="Search"
        aria-label="Search"
        #searchInput
-       (keyup)="doSearch(searchInput.value)">
+       [(ngModel)]="criteria"
+       (input)="doSearch(searchInput.value)">

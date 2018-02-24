@@ -1,14 +1,16 @@
-<h2>{{ thread?.title }}<span class="badge badge-secondary">New</span></h2>
+<h2>
+    <span [ngStyle]="{'background-color': thread?.tag.color}" class="badge badge-secondary">New</span>
+    {{ thread?.title }}
+</h2>
 
 <div class="thread-actions">
     <!-- Show a delete button, if applicable -->
     <button type="button" class="btn btn-danger"
             (click)="deleteThread()"
             *ngIf="thread?.author.userName == user?.userName">
-        Delete
+        Delete thread
     </button>
 </div>
-
 
 <div class="row align-items-center thread" *ngFor="let reply of replies; let i = index" [attr.data-index]="i">
     <ul class="list-unstyled col">

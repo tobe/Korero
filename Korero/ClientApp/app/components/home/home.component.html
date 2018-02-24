@@ -2,7 +2,9 @@
     <div class="col-sm-auto">
         <button type="button" class="btn btn-dark" [routerLink]="['/newthread']">New thread</button>
     </div>
-    <app-search [threads]="threads" class="col-sm search"></app-search>
+    <ng-container *ngIf="threads">
+        <app-search [threads]="threads" class="col-sm search"></app-search>
+    </ng-container>
 </div>
 
 <div *ngIf="threads">
@@ -15,37 +17,39 @@
     <div class="col-sm views">Views</div>
 </div>
 
-<ng-container *ngFor="let thread of threads">
-    <div *ngIf="shownThreadCount() == 0" class="nothreads">
-        No threads have been found according to your criteria.
-    </div>
-    <div class="row align-items-center thread" *ngIf="thread.show">
-        <ul class="list-unstyled col-sm-8">
-            <li class="media">
-                <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex mr-3 avatar" alt="User profile image"></app-avatar>
-                <div class="media-body" [routerLink]="['/thread', thread.id]">
-                    <h5 class="mt-0 mb-1 thread-title">
-                        {{ thread.title }}
-                    </h5>
-                    <p>{{ thread.replies[0].body | excerpt:50 }}</p>
-                    <div class="info">
-                        <small class="badge" [ngStyle]="{'background-color': thread.tag.color}">
-                            {{ thread.tag.label }}
-                        </small>
-                        <small class="text-success">@{{ thread.author.userName }}</small>
-                        &ndash;
-                        <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+<div *ngIf="shownThreadCount() == 0" class="nothreads">
+    No threads have been found according to your criteria.
+</div>
+<ng-container *ngIf="shownThreadCount() > 0">
+    <ng-container *ngFor="let thread of threads">
+        <div class="row align-items-center thread" *ngIf="thread.show">
+            <ul class="list-unstyled col-sm-8">
+                <li class="media">
+                    <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex mr-3 avatar" alt="User profile image"></app-avatar>
+                    <div class="media-body" [routerLink]="['/thread', thread.id]">
+                        <h5 class="mt-0 mb-1 thread-title">
+                            {{ thread.title }}
+                        </h5>
+                        <p>{{ thread.replies[0].body | excerpt:50 }}</p>
+                        <div class="info">
+                            <small class="badge" [ngStyle]="{'background-color': thread.tag.color}">
+                                {{ thread.tag.label }}
+                            </small>
+                            <small class="text-success">@{{ thread.author.userName }}</small>
+                            &ndash;
+                            <small class="text-secondary">{{ thread.dateCreated | date:'dd.MM.yyyy @ H:mm' }}</small>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
-        <div class="col-sm replies-col">
-            <span class="thread-info" [ngClass]="{'padleft': thread.replies.length < 10}">{{ thread.replies.length }}</span>
+                </li>
+            </ul>
+            <div class="col-sm replies-col">
+                <span class="thread-info" [ngClass]="{'padleft': thread.replies.length < 10}">{{ thread.replies.length }}</span>
+            </div>
+            <div class="col-sm views-col">
+                <span class="thread-info" [ngClass]="{'padleft': thread.views < 10}">{{ thread.views }}</span>
+            </div>
         </div>
-        <div class="col-sm views-col">
-            <span class="thread-info" [ngClass]="{'padleft': thread.views < 10}">{{ thread.views }}</span>
-        </div>
-    </div>
+    </ng-container>
 </ng-container>
 
 <app-pagination (goPage)="goToPage($event)"

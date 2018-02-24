@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef, NgZone } from '@angular/core';
 import { Thread } from '../../models/thread';
 
 @Component({
@@ -6,27 +6,35 @@ import { Thread } from '../../models/thread';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnChanges {
     @Input() threads: Thread[];
+    criteria: string;
 
-    constructor() { }
+    constructor(private changeDetect: ChangeDetectorRef) { }
 
-    ngOnInit() {
+    ngOnChanges(changes: SimpleChanges) {
+        if (!this.threads || !this.criteria) return;
 
+        // Delay the execution for 1 tick, wait before it's rendered to change the model
+        // Otherwise... it doesn't simply work.
+        setTimeout(() => this.doSearch(), 0);
+
+        this.changeDetect.detectChanges();
     }
 
-    doSearch(value: string): void {
-        if (value.length == 0) return;
-        value = value.toLowerCase();
+    doSearch(): void {
+        if (this.criteria.length == 0) return;
+        this.criteria = this.criteria.toLowerCase();
 
         // Just .filter...
-        const newThreads = this.threads.filter(t => {
-            return t.title.toLowerCase().indexOf(value) > -1 ||
-                   t.replies[0].body.indexOf(value) > -1
+        const filteredThreads = this.threads.filter(t => {
+            return t.title.toLowerCase().indexOf(this.criteria) > -1 ||
+                   t.replies[0].body.indexOf(this.criteria) > -1
         });
 
-        this.threads = newThreads;
-
-        //console.log(x);
+        this.threads.forEach(t => {
+            t.show = (filteredThreads.includes(t)) ? true : false;
+            this.changeDetect.markForCheck();
+        });
     }
 }
