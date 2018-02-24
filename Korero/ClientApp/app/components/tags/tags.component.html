@@ -1,3 +1,10 @@
-<p>
-  tags works!
-</p>
+<div class="row taglist">
+    <h5>
+        <a *ngFor="let tag of tags"
+           class="badge"
+           [ngStyle]="{'background-color': tag.color, 'opacity': tag.checked ? 1 : 0.3}"
+           (click)="clickTag(tag)">
+            {{ tag.label }}
+        </a>
+    </h5>
+</div>

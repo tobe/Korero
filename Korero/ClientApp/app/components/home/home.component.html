@@ -1,14 +1,7 @@
 <button type="button" class="btn btn-dark" [routerLink]="['/newthread']">New thread</button>
 
-<div class="row taglist">
-    <h5>
-        <a *ngFor="let tag of tags"
-           class="badge"
-           [ngStyle]="{'background-color': tag.color, 'opacity': tag.checked ? 1 : 0.3}"
-           (click)="clickTag(tag)">
-            {{ tag.label }}
-        </a>
-    </h5>
+<div *ngIf="threads">
+    <app-tags [threads]="threads"></app-tags>
 </div>
 
 <div class="row legend">
@@ -17,8 +10,8 @@
     <div class="col-sm views">Views</div>
 </div>
 
-<ng-container *ngFor="let thread of threads?.data">
-    <div class="row align-items-center thread">
+<ng-container *ngFor="let thread of threads">
+    <div class="row align-items-center thread" *ngIf="thread.show">
         <ul class="list-unstyled col-sm-8">
             <li class="media">
                 <app-avatar letter="{{ thread.author.userName.charAt(0).toUpperCase() }}" class="d-flex mr-3 avatar" alt="User profile image"></app-avatar>

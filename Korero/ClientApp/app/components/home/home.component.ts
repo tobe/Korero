@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { ThreadService } from '../../services/thread.service';
 
-import { ThreadData } from '../../models/thread';
+import { Thread } from '../../models/thread';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomeComponent implements OnInit {
     // Will hold the results of the API call
-    public threads: ThreadData;
+    public threads: Thread[];
 
     // Pagination stuff
     public total = 0;
@@ -32,9 +32,11 @@ export class HomeComponent implements OnInit {
     }
 
     getThreads(): void {
-        this.threadService.getThreads(this.page).subscribe(data => {
-            this.threads = data;
-            this.total = data.total;
+        this.threadService.getThreads(this.page).subscribe(resp => {
+            this.threads = resp.data;
+            this.total = resp.total;
+
+            for (let thread of this.threads) thread.show = true;
         });
     }
 

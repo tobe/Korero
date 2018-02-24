@@ -11,7 +11,7 @@ export class Thread {
     public replies: Reply[];
     public author: User;
 
-    public show: boolean = true; // Filtering purposes ;)
+    public show: boolean;
 }
 
 export class ThreadData {

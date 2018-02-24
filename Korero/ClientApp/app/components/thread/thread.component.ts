@@ -195,7 +195,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         );
 
         // Update the replies.
-        setTimeout(() => this.goToPage(this.page), 100);
+        setTimeout(() => this.goToPage(this.page), 1000);
     }
 
     /**
@@ -208,7 +208,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
                 this.notificationService.success('Success', 'The reply has been deleted');
 
                 // Redirect the user to the same page --> the reply will disappear :)
-                setTimeout(() => this.goToPage(this.page), 100);
+                setTimeout(() => this.goToPage(this.page), 1000);
             },
             error => {
                 this.notificationService.error('Failure', 'Failed to delete the reply');
