@@ -58,7 +58,14 @@ export class NewThreadComponent implements OnInit {
      * Deletes the currently selected tag.
      */
     deleteCurrentTag(): void {
-
+        this.tagService.deleteTag(this.selectedTag).subscribe(
+            then => {
+                this.notificationService.success('Success', 'Tag deleted!');
+            },
+            error => {
+                this.notificationService.error('Failure', 'Tag not deleted!');
+            }
+        );
     }
 
     /**

@@ -15,6 +15,7 @@ namespace Korero.Models
 
         [Required]
         [StringLength(7)]
+        [RegularExpression("#(?:[0-9a-fA-F]{3}){1,2}")]
         public string Color { get; set; } // Hex color
     }
 }

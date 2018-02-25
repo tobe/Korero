@@ -8,9 +8,23 @@ import { Tag } from '../models/tag';
 
 @Injectable()
 export class TagService {
-    private endpoint = '/api/tag/';
+    private endpoint = '/api/tag';
 
     constructor(private _http: HttpClient) { }
+
+    createTag(tag: Tag): Observable<Tag> {
+        return this._http.post<Tag>(this.endpoint, tag)
+            .pipe(
+            catchError(this.handleError<Tag>('createTag'))
+            );
+    }
+
+    deleteTag(tag: Tag): Observable<Response> {
+        return this._http.delete<Response>(`${this.endpoint}/${tag.id}`)
+            .pipe(
+            catchError(this.handleError<Response>('deleteTag'))
+            );
+    }
 
     getTags(): Observable<Tag[]> {
         return this._http.get<Tag[]>(this.endpoint)

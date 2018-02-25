@@ -36,5 +36,43 @@ namespace Korero.Repositories
         {
             return this._context.Tag.Where(t => t.ID == id).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Adds a new tag
+        /// </summary>
+        /// <param name="Tag">The tag to add</param>
+        /// <returns></returns>
+        public bool AddTag(Tag Tag)
+        {
+            // There is nothing specific to validate, ModelState in the controller checks for everything.
+            try
+            {
+                this._context.Tag.Add(Tag);
+                this._context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a tag and all threads belonging to it.
+        /// </summary>
+        /// <param name="tag">The tag to delete</param>
+        /// <returns></returns>
+        public bool DeleteTag(Tag Tag)
+        {
+            try
+            {
+                this._context.Tag.Remove(Tag);
+                this._context.SaveChanges();
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
     }
 }

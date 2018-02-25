@@ -83,6 +83,16 @@ namespace Korero.Repositories
         }
 
         /// <summary>
+        /// Returns all threads belonging to a tag
+        /// </summary>
+        /// <param name="tag">The tag to return threads belonging to</param>
+        /// <returns></returns>
+        public List<Thread> GetThreadsByTag(Tag tag)
+        {
+            return this._context.Thread.Where(t => t.Tag == tag).ToList();
+        }
+
+        /// <summary>
         /// Adds a new thread 
         /// </summary>
         /// <param name="thread">The thread to add</param>
@@ -121,6 +131,25 @@ namespace Korero.Repositories
             this._context.Thread.Remove(thread);
             this._context.SaveChanges();
             return true;
+        }
+
+        /// <summary>
+        /// Deletes multiple threads. Verification of proof must be completed beforehand.
+        /// </summary>
+        /// <param name="ThreadList">A list of threads to delete</param>
+        /// <returns></returns>
+        public bool DeleteMultipleThreads(List<Thread> ThreadList)
+        {
+            try
+            {
+                this._context.Thread.RemoveRange(ThreadList);
+                this._context.SaveChanges();
+
+                return true;
+            }catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
