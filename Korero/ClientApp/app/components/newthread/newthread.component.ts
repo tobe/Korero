@@ -61,6 +61,8 @@ export class NewThreadComponent implements OnInit {
         this.tagService.deleteTag(this.selectedTag).subscribe(
             then => {
                 this.notificationService.success('Success', 'Tag deleted!');
+
+                setTimeout(() => this.router.navigate(['/']), 1000);
             },
             error => {
                 this.notificationService.error('Failure', 'Tag not deleted!');
