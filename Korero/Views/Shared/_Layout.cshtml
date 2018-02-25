@@ -12,7 +12,9 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Korero</a>
+        <a class="navbar-brand mr-md-auto" href="#">Korero</a>
+
+        @await Html.PartialAsync("_LoginPartial")
     </nav>
 
     <div class="container">
