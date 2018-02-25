@@ -15,6 +15,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 // Components
 import { AppComponent } from './app.component';
@@ -70,7 +71,8 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
       NgProgressModule.forRoot(),
       NgProgressHttpModule,
       NgProgressRouterModule,
-      MarkdownToHtmlModule
+      MarkdownToHtmlModule,
+      ColorPickerModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

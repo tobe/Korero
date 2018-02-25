@@ -24,10 +24,16 @@
             </div>
         </div>
         <button type="button" class="btn btn-warning mb-3" (click)="deleteCurrentTag()">Delete</button>
-        <button type="button" class="btn btn-success mb-3 ml-2" (click)="showNewTagProps = !showNewTagProps">New</button>
+        <button type="button" class="btn btn-primary mb-3 ml-2" (click)="showNewTagProps = !showNewTagProps">New</button>
     </div>
-    <div class="form-group" *ngIf="showNewTagProps">
-        hello
+    <div class="form-group form-inline" *ngIf="showNewTagProps">
+        <input class="form-control"
+               name="label"
+               placeholder="New tag name"
+               [(ngModel)]="newTag.label"
+               [(colorPicker)]="newTag.color"
+               [style.background]="newTag.color" />
+        <button type="button" class="btn btn-success ml-2" (click)="addNewTag()">Add</button>
     </div>
     <div class="form-group">
         <div [innerHTML]="reply?.body | MarkdownToHtml"></div>

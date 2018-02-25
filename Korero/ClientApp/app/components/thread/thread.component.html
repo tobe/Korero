@@ -1,5 +1,7 @@
 <h2>
-    <span [ngStyle]="{'background-color': thread?.tag.color}" class="badge badge-secondary">New</span>
+    <span [ngStyle]="{'background-color': thread?.tag.color}" class="badge badge-secondary">
+        {{ thread?.tag.label }}
+    </span>
     {{ thread?.title }}
 </h2>
 

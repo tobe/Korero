@@ -22,6 +22,8 @@ export class NewThreadComponent implements OnInit {
     public thread: Thread = new Thread();
     public tags: Tag[];
 
+    public newTag: Tag = new Tag();
+
     public selectedTag: Tag;
     public showNewTagProps = false;
 
@@ -62,10 +64,35 @@ export class NewThreadComponent implements OnInit {
             then => {
                 this.notificationService.success('Success', 'Tag deleted!');
 
-                setTimeout(() => this.router.navigate(['/']), 1000);
+                setTimeout(() => this.router.navigate(['/newthread']), 1000);
             },
             error => {
                 this.notificationService.error('Failure', 'Tag not deleted!');
+            }
+        );
+    }
+
+    /**
+     * Adds a new tag described by its color and label
+     */
+    addNewTag(): void {
+        // Check if we have stuff set
+        if (!this.newTag || !this.newTag.label || !this.newTag.color) return;
+
+        this.tagService.createTag(this.newTag).subscribe(
+            then => {
+                // Heyy
+                this.notificationService.success('Success', 'Tag has been successfully added');
+
+                // Close the newtag creation dialog
+                this.showNewTagProps = false;
+
+                // Push it into the array, since we know it's been added and select it
+                this.tags.push(then);
+                this.selectedTag = this.tags[this.tags.length - 1];
+            },
+            error => {
+                this.notificationService.error('Failure', 'Failed to add the new tag');
             }
         );
     }

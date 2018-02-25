@@ -49,6 +49,10 @@ namespace Korero.Repositories
                 .Load();
             }*/
 
+            // TODO: Fix this using explicit loading ^ (works),
+            // but return the number of views in a separate API call
+            // At the moment, ALL replies are returned! (terrible performance!)
+
             var query = this._context.Thread.Include(t => t.Tag)
                 .Include(t => t.Author)
                 .Include(r => r.Replies)
@@ -64,7 +68,6 @@ namespace Korero.Repositories
             {
                 q.Replies = q.Replies.OrderBy(x => x.DateCreated).ToList();
             }
-            // Note to self: idk why I was returning all replies when I only need the first one... sigh
 
             return (paginatedData, query.Count());
         }
