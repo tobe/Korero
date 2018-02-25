@@ -12,15 +12,22 @@
                 Thread title is required.
         </small>
     </div>
-    <div class="form-group">
-        <div class="dropdown">
-            <select [(ngModel)]="selectedTag"
-                    name="selectedTag"
-                    class="custom-select"
-                    [ngStyle]="{'border-color': selectedTag?.color}">
-                <option *ngFor="let tag of tags" [ngValue]="tag">{{ tag.label }}</option>
-            </select>
+    <div class="form-inline tagform">
+        <div class="form-group stretch">
+            <div class="dropdown">
+                <select [(ngModel)]="selectedTag"
+                        name="selectedTag"
+                        class="custom-select"
+                        [ngStyle]="{'border-color': selectedTag?.color}">
+                    <option *ngFor="let tag of tags" [ngValue]="tag">{{ tag.label }}</option>
+                </select>
+            </div>
         </div>
+        <button type="button" class="btn btn-warning mb-3" (click)="deleteCurrentTag()">Delete</button>
+        <button type="button" class="btn btn-success mb-3 ml-2" (click)="showNewTagProps = !showNewTagProps">New</button>
+    </div>
+    <div class="form-group" *ngIf="showNewTagProps">
+        hello
     </div>
     <div class="form-group">
         <div [innerHTML]="reply?.body | MarkdownToHtml"></div>

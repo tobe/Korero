@@ -23,6 +23,7 @@ export class NewThreadComponent implements OnInit {
     public tags: Tag[];
 
     public selectedTag: Tag;
+    public showNewTagProps = false;
 
     constructor(
         private replyService: ReplyService,
@@ -50,6 +51,14 @@ export class NewThreadComponent implements OnInit {
                 this.router.navigate(['/error/500']);
             }
         );
+    }
+
+
+    /**
+     * Deletes the currently selected tag.
+     */
+    deleteCurrentTag(): void {
+
     }
 
     /**

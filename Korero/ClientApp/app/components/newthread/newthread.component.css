@@ -1,5 +1,6 @@
 .dropdown {
     margin-bottom: 1rem;
+    width: 98%;
 }
 .custom-select {
     border-left: 1rem solid transparent;
@@ -10,4 +11,20 @@
 
 .ng-invalid:not(form) {
     border: 1px solid #a94442; /* red */
+}
+
+.stretch {
+    display: flex;
+    flex: 1;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 575.98px) {
+    .tagform {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
